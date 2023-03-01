@@ -1,6 +1,18 @@
-// This is the JavaScript entry file - your code begins here
-// Do not delete or rename this file ********
-
-// An example of how you tell webpack to use a CSS (SCSS) file
 import './css/styles.css';
-import './images/lobby.jpg'
+import './css/micromodal.css';
+import './images/lobby.jpg';
+import MicroModal from 'micromodal';
+
+MicroModal.init();
+
+const getRoom = document.getElementById('getRoom');
+const modal = document.getElementById('modal');
+
+getRoom.addEventListener('click', (event) => {
+  event.preventDefault();
+  showModal();
+});
+
+const showModal = () => {
+  MicroModal.show('modal-1');
+}

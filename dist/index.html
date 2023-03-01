@@ -4,24 +4,62 @@
   <meta charset="UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" rel="stylesheet"/>
+  <link href="https://fonts.googleapis.com/css2?family=Raleway:wght@100&family=Tilt+Prism&display=swap" rel="stylesheet">
   <title>Overlook</title>
 </head>
 <body>
-  <header>
+  <header class="row">
     <h1>Overlook Booking</h1>
+    <p class="motto">Simply the best! ™️</p>
   </header>
   <nav class="row">
-    <button class="nav-button">Home</button><button class="nav-button">My Bookings</button><button class="nav-button">My Expenses</button>
+    <div class="nav-buttons row">
+      <button class="nav-button" id="home"><span class="material-symbols-outlined">Home</span>Home</button><button class="nav-button"><span class="material-symbols-outlined">bookmark</span>My Bookings</button><button class="nav-button"><span class="material-symbols-outlined">face</span>My Expenses</button>
+    </div>
+    <div class="icons row">
+      <span class="material-symbols-outlined icon">bed</span>
+      <span class="material-symbols-outlined icon">soap</span>
+      <span class="material-symbols-outlined icon">people</span>
+    </div>
   </nav>
   <main class="row">
     <div class ="date-selector column">
       <h2>Find Me A Room:</h2>
       <form class="row">
-        <input type="date" id="chooseDate" class="calendar">
-        <label for="chooseDate" class="get-room"><button>Get My Room!</button></label>
+        <input type="date" id="chooseDate" class="calendar" value="2023-03-01">
+        <label for="chooseDate" class="get-room"><button id="getRoom">Get My Room!<span class="material-symbols-outlined">arrow_forward</span></button></label>
       </form>
     </div>
   </main>
-  <script src="bundle.js"></script>
+  <footer>
+    <p>© 2023 Overlook Booking is a Turing Module 2 Project. All rights reserved.</p>
+    <p>Overlook Booking and the Overlook Booking logo are trademarks or registered trademarks of nothing, no one in the United States and/or other countries.</p>
+    <p>All other trademarks are the property of their respective owners.</p>
+  </footer>
+  <!-- Modal -->
+  <div class="modal micromodal-slide" id="modal-1" aria-hidden="true">
+    <div class="modal__overlay" tabindex="-1" data-micromodal-close>
+      <div class="modal__container" role="dialog" aria-modal="true" aria-labelledby="modal-1-title">
+        <header class="modal__header">
+          <h2 class="modal__title" id="modal-1-title">
+            Micromodal
+          </h2>
+          <button class="modal__close" aria-label="Close modal" data-micromodal-close></button>
+        </header>
+        <main class="modal__content" id="modal-1-content">
+          <p>
+            Try hitting the <code>tab</code> key and notice how the focus stays within the modal itself. Also, <code>esc</code> to close modal.
+          </p>
+        </main>
+        <footer class="modal__footer">
+          <button class="modal__btn modal__btn-primary">Continue</button>
+          <button class="modal__btn" data-micromodal-close aria-label="Close this dialog window">Close</button>
+        </footer>
+      </div>
+    </div>
+  </div>
+  <!-- End Modal -->
 </body>
+<script src="bundle.js"></script>
 </html>

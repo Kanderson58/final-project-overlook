@@ -1,9 +1,6 @@
-/* * {
-  border: solid lightpink 2px;
-} */
-
 body {
   margin: 0;
+  font-family: 'Raleway', sans-serif;
 }
 
 main {
@@ -17,11 +14,16 @@ main {
 
 header {
   width: 100%;
+  justify-content: space-between;
+  align-items: center;
 }
 
 nav {
   margin: 0 3%;
-  border-left: rgb(188, 174, 174) solid 1px;
+  border: rgb(188, 174, 174) solid 1px;
+  border-bottom: none;
+  justify-content: space-between;
+  align-items: center;
 }
 
 img {
@@ -35,7 +37,8 @@ button {
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: 12pt;
+  font-size: 15pt;
+  font-family: 'Raleway', sans-serif;
 }
 
 form {
@@ -44,6 +47,24 @@ form {
 
 h1 {
   margin: 1.5%;
+  font-family: 'Tilt Prism', cursive;
+  font-size: 45pt;
+  color: #860c0f;
+  text-shadow: 1px 1px 3px rgb(85, 85, 85);
+}
+
+h2 {
+  font-size: 30pt;
+  text-shadow: 1px 1px 2px #860c0f;
+}
+
+footer {
+  margin: 3%;
+  border-top: rgb(212, 212, 212) solid 1px;
+  font-size: 10pt;
+  color: #575757;
+  text-align: center;
+  line-height: .5;
 }
 
 .column {
@@ -56,15 +77,39 @@ h1 {
   flex-direction: row;
 }
 
-.nav-button {
-  height: 50px;
-  width: 150px;
-  border: rgb(188, 174, 174) solid 1px;
-  border-left: none;
+.material-symbols-outlined {
+  padding: 0 2%;
+  cursor: pointer;
+  font-size: 20pt;
 }
 
-.nav-button:hover{
-  background-color: bisque;
+.motto {
+  padding-right: 3%;
+}
+
+.nav-button {
+  height: 50px;
+  width: 200px;
+}
+
+.nav-button:hover {
+  background-color: white;
+  border-bottom: solid 5px #d1ae8f;
+}
+
+.icon {
+  font-size: 25pt;
+  margin: 0 20%;
+  color: #575757;
+}
+
+.icon:hover {
+  color: black;
+}
+
+.icons {
+  padding: 0 5%;
+  margin: 0 5%;
 }
 
 .date-selector {
@@ -80,26 +125,20 @@ h1 {
   border: rgb(188, 174, 174) solid 1px;
   padding: 2%;
   font-size: 15pt;
+  height: 50px;
+  width: 250px;
 }
 
 .calendar {
-  /* border: rgb(188, 174, 174) solid 1px; */
   border-right: none;
-  height: 50px;
-  width: 200px;
-  /* padding: 2%;
-  font-size: 15pt; */
 }
 
 .get-room {
-  height: 50px;
-  width: 150px;
   background-color: rgba(255, 255, 255, 0.745);
   float: right;
-  /* border: rgb(188, 174, 174) solid 1px; */
   border-left: none;
   display: flex;
   justify-content: center;
   align-items: center;
-  /* padding: 2%; */
+  white-space: nowrap;
 }
