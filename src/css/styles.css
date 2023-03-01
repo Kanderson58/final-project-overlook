@@ -1,3 +1,144 @@
 body {
-  background: radial-gradient(circle, rgba(63,94,251,1) 0%, rgba(252,70,107,1) 100%);
+  margin: 0;
+  font-family: 'Raleway', sans-serif;
+}
+
+main {
+  margin: 0 3% 3% 3%;
+  background-size: cover;
+  background-image: url("../images/lobby.jpg");
+  background-repeat: no-repeat;
+  justify-content: center;
+  align-items: center;
+}
+
+header {
+  width: 100%;
+  justify-content: space-between;
+  align-items: center;
+}
+
+nav {
+  margin: 0 3%;
+  border: rgb(188, 174, 174) solid 1px;
+  border-bottom: none;
+  justify-content: space-between;
+  align-items: center;
+}
+
+img {
+  object-fit: cover;
+}
+
+button {
+  border: none;
+  background: none;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 15pt;
+  font-family: 'Raleway', sans-serif;
+}
+
+form {
+  width: fit-content;
+}
+
+h1 {
+  margin: 1.5%;
+  font-family: 'Tilt Prism', cursive;
+  font-size: 45pt;
+  color: #860c0f;
+  text-shadow: 1px 1px 3px rgb(85, 85, 85);
+}
+
+h2 {
+  font-size: 30pt;
+  text-shadow: 1px 1px 2px #860c0f;
+}
+
+footer {
+  margin: 3%;
+  border-top: rgb(212, 212, 212) solid 1px;
+  font-size: 10pt;
+  color: #575757;
+  text-align: center;
+  line-height: .5;
+}
+
+.column {
+  display: flex;
+  flex-direction: column;
+}
+
+.row {
+  display: flex;
+  flex-direction: row;
+}
+
+.material-symbols-outlined {
+  padding: 0 2%;
+  cursor: pointer;
+  font-size: 20pt;
+}
+
+.motto {
+  padding-right: 3%;
+}
+
+.nav-button {
+  height: 50px;
+  width: 200px;
+}
+
+.nav-button:hover {
+  background-color: white;
+  border-bottom: solid 5px #d1ae8f;
+}
+
+.icon {
+  font-size: 25pt;
+  margin: 0 20%;
+  color: #575757;
+}
+
+.icon:hover {
+  color: black;
+}
+
+.icons {
+  padding: 0 5%;
+  margin: 0 5%;
+}
+
+.date-selector {
+  height: 400px;
+  width: 80%;
+  margin: 10% 0;
+  background-color: rgba(255, 255, 255, 0.365);
+  justify-content: center;
+  align-items: center;
+}
+
+.calendar, .get-room {
+  border: rgb(188, 174, 174) solid 1px;
+  padding: 2%;
+  font-size: 15pt;
+  height: 50px;
+  width: 250px;
+}
+
+.calendar {
+  border-right: none;
+}
+
+.get-room {
+  background-color: rgba(255, 255, 255, 0.745);
+  float: right;
+  border-left: none;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  white-space: nowrap;
 }
