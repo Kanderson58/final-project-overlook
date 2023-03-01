@@ -4,13 +4,24 @@
   <meta charset="UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Webpack Starter Kit</title>
+  <title>Overlook</title>
 </head>
 <body>
-  <img src="./images/turing-logo.png" alt="turing logo">
-  
-  <!-- Do not include the scripts.js or class files here - it is done by the webpack server -->
+  <header>
+    <h1>Overlook Booking</h1>
+  </header>
+  <nav class="row">
+    <button class="nav-button">Home</button><button class="nav-button">My Bookings</button><button class="nav-button">My Expenses</button>
+  </nav>
+  <main class="row">
+    <div class ="date-selector column">
+      <h2>Find Me A Room:</h2>
+      <form class="row">
+        <input type="date" id="chooseDate" class="calendar">
+        <label for="chooseDate" class="get-room"><button>Get My Room!</button></label>
+      </form>
+    </div>
+  </main>
   <script src="bundle.js"></script>
-
 </body>
 </html>

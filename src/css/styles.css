@@ -1,3 +1,105 @@
+/* * {
+  border: solid lightpink 2px;
+} */
+
 body {
-  background: radial-gradient(circle, rgba(63,94,251,1) 0%, rgba(252,70,107,1) 100%);
+  margin: 0;
+}
+
+main {
+  margin: 0 3% 3% 3%;
+  background-size: cover;
+  background-image: url("../images/lobby.jpg");
+  background-repeat: no-repeat;
+  justify-content: center;
+  align-items: center;
+}
+
+header {
+  width: 100%;
+}
+
+nav {
+  margin: 0 3%;
+  border-left: rgb(188, 174, 174) solid 1px;
+}
+
+img {
+  object-fit: cover;
+}
+
+button {
+  border: none;
+  background: none;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 12pt;
+}
+
+form {
+  width: fit-content;
+}
+
+h1 {
+  margin: 1.5%;
+}
+
+.column {
+  display: flex;
+  flex-direction: column;
+}
+
+.row {
+  display: flex;
+  flex-direction: row;
+}
+
+.nav-button {
+  height: 50px;
+  width: 150px;
+  border: rgb(188, 174, 174) solid 1px;
+  border-left: none;
+}
+
+.nav-button:hover{
+  background-color: bisque;
+}
+
+.date-selector {
+  height: 400px;
+  width: 80%;
+  margin: 10% 0;
+  background-color: rgba(255, 255, 255, 0.365);
+  justify-content: center;
+  align-items: center;
+}
+
+.calendar, .get-room {
+  border: rgb(188, 174, 174) solid 1px;
+  padding: 2%;
+  font-size: 15pt;
+}
+
+.calendar {
+  /* border: rgb(188, 174, 174) solid 1px; */
+  border-right: none;
+  height: 50px;
+  width: 200px;
+  /* padding: 2%;
+  font-size: 15pt; */
+}
+
+.get-room {
+  height: 50px;
+  width: 150px;
+  background-color: rgba(255, 255, 255, 0.745);
+  float: right;
+  /* border: rgb(188, 174, 174) solid 1px; */
+  border-left: none;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  /* padding: 2%; */
 }
