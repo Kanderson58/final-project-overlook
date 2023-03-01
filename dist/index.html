@@ -15,7 +15,7 @@
   </header>
   <nav class="row">
     <div class="nav-buttons row">
-      <button class="nav-button" id="home"><span class="material-symbols-outlined">Home</span>Home</button><button class="nav-button"><span class="material-symbols-outlined">bookmark</span>My Bookings</button><button class="nav-button"><span class="material-symbols-outlined">face</span>My Expenses</button>
+      <button class="nav-button" id="home"><span class="material-symbols-outlined">Home</span>Home</button><button class="nav-button" id="myBookings"><span class="material-symbols-outlined">bookmark</span>My Bookings</button><button class="nav-button"><span class="material-symbols-outlined">face</span>My Expenses</button>
     </div>
     <div class="icons row">
       <span class="material-symbols-outlined icon">bed</span>
@@ -24,13 +24,19 @@
     </div>
   </nav>
   <main class="row">
-    <div class ="date-selector column">
+    <section class ="date-selector column" id="findRoom">
       <h2>Find Me A Room:</h2>
       <form class="row">
         <input type="date" id="chooseDate" class="calendar" value="2023-03-01">
         <label for="chooseDate" class="get-room"><button id="getRoom">Get My Room!<span class="material-symbols-outlined">arrow_forward</span></button></label>
       </form>
-    </div>
+    </section>
+    <section class="bookings" id="bookings">
+      <!-- Bookings Populate Here -->
+    </section>
+    <section class="expenses" id="expenses">
+      <!-- Expenses Populate Here -->
+    </section>
   </main>
   <footer>
     <p>© 2023 Overlook Booking is a Turing Module 2 Project. All rights reserved.</p>

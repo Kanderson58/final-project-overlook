@@ -142,3 +142,7 @@ footer {
   align-items: center;
   white-space: nowrap;
 }
+
+.hide {
+  display: none;
+}

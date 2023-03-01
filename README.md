@@ -1,0 +1,11 @@
+Actions that need to happen:
+[ ] Find their own room booking
+[ ] Find their own spending
+[ ] Choose a date
+[ ] Show them a list of rooms available based on date
+[ ] Filter based on roomType
+[ ] Select a room to be booked
+[ ] Error handle if there's no rooms
+[ ] Create accessibility branch
+[ ] Be able to log in with user and password
+[ ] Error handle wrong password/user
