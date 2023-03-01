@@ -58,6 +58,11 @@ h2 {
   text-shadow: 1px 1px 2px #860c0f;
 }
 
+h3 {
+  font-size: 20pt;
+  font-weight: 600;
+}
+
 footer {
   margin: 3%;
   border-top: rgb(212, 212, 212) solid 1px;
@@ -112,7 +117,7 @@ footer {
   margin: 0 5%;
 }
 
-.date-selector {
+.date-selector, .bookings, .expenses {
   height: 400px;
   width: 80%;
   margin: 10% 0;
@@ -124,6 +129,7 @@ footer {
 .calendar, .get-room {
   border: rgb(188, 174, 174) solid 1px;
   padding: 2%;
+  margin-bottom: 10%;
   font-size: 15pt;
   height: 50px;
   width: 250px;
@@ -143,6 +149,19 @@ footer {
   white-space: nowrap;
 }
 
-.hide {
+.bookings {
+  justify-content: space-evenly;
+}
+
+.old, .new {
+  height: 75%;
+  width: 40%;
+  overflow-y: scroll;
+  text-align: center;
+  background-color: rgba(255, 255, 255, 0.875);
+  padding: 2%;
+}
+
+.hidden {
   display: none;
 }

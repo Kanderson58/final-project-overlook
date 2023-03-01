@@ -24,17 +24,18 @@
     </div>
   </nav>
   <main class="row">
-    <section class ="date-selector column" id="findRoom">
+    <section class ="date-selector column" id="findRoom" aria-hidden="false">
       <h2>Find Me A Room:</h2>
       <form class="row">
-        <input type="date" id="chooseDate" class="calendar" value="2023-03-01">
+        <input type="date" id="chooseDate" class="calendar">
         <label for="chooseDate" class="get-room"><button id="getRoom">Get My Room!<span class="material-symbols-outlined">arrow_forward</span></button></label>
       </form>
     </section>
-    <section class="bookings" id="bookings">
-      <!-- Bookings Populate Here -->
+    <section class="bookings hidden row" aria-hidden="true" id="bookings">
+      <div class="new" id="new"><h3>Your Upcoming Bookings:</h3></div>
+      <div class="old" id="old"><h3>Your Past Bookings:</h3></div>
     </section>
-    <section class="expenses" id="expenses">
+    <section class="expenses hidden column" aria-hidden="true" id="expenses">
       <!-- Expenses Populate Here -->
     </section>
   </main>
