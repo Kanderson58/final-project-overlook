@@ -18,7 +18,12 @@ describe('Bookings', () => {
     expect(bookingsInst.bookings.length).to.equal(10);
   });
 
-  it('should find available bookings based on a date', () => {
-    expect(bookingsInst.findAvailable("2022/01/10").length).to.equal(9);
+  it('should find taken bookings based on a date', () => {
+    expect(bookingsInst.findTaken("2022/01/10")).to.deep.equal([{
+      "id": "5fwrgu4i7k55hl6t6",
+      "userID": 3,
+      "date": "2022/01/10",
+      "roomNumber": 3
+    }]);
   });
 });

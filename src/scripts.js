@@ -42,8 +42,8 @@ myBookingsButton.addEventListener('click', () => { displayBookings() });
 myExpensesButton.addEventListener('click', () => { displayExpenses() });
 
 getRoom.addEventListener('click', (event) => {
-  allBookings.findAvailable(chosenDate.value);
   event.preventDefault();
+  allRooms.filterByBookedStatus(allBookings.findTaken(chosenDate.value));
   showModal();
 });
 

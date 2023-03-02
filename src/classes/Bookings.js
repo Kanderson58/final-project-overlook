@@ -4,8 +4,8 @@ class Bookings {
     this.currentBookings = [];
   }
 
-  findAvailable(chosenDate) {
-    this.currentBookings = this.bookings.filter(booking => booking.date !== chosenDate.replaceAll('-', '/'));
+  findTaken(chosenDate) {
+    this.currentBookings = this.bookings.filter(booking => booking.date === chosenDate.replaceAll('-', '/'));
     return this.currentBookings;
   }
 }
