@@ -26,7 +26,7 @@ let currentUser, allBookings, allRooms;
 // Event listeners
 window.addEventListener('load', fetchData().then(data => {
   calendarDate.setAttribute('value', new Date().toISOString().split('T')[0]);
-  currentUser = new User(data[0].customers[8]);
+  currentUser = new User(data[0].customers[3]);
   allRooms = new Room(data[1].rooms);
   allBookings = new Bookings(data[2].bookings);
 }))
@@ -66,8 +66,8 @@ const displayBookings = () => {
   hide(expensesSection);
   show(bookingsSection);
 
-  oldBookings.innerHTML = '<h3>Your Upcoming Bookings:</h3>';
-  newBookings.innerHTML = '<h3>Your Past Bookings:</h3>';
+  oldBookings.innerHTML = '<h3>Your Past Bookings:</h3>';
+  newBookings.innerHTML = '<h3>Your Upcoming Bookings:</h3>';
 
   currentUser.filterBookingByUser(allBookings.bookings);
 
@@ -88,5 +88,5 @@ const displayExpenses = () => {
   currentUser.filterBookingByUser(allBookings.bookings);
 
   expensesSection.innerHTML = '';
-  expensesSection.innerHTML += `Your total spend on hotel rooms with Overlook Booking is $${currentUser.getTotalCost(allRooms.rooms)}`;
+  expensesSection.innerHTML += `<p>Your total spend on hotel rooms with Overlook Booking is $${currentUser.getTotalCost(allRooms.rooms)}.</p>`;
 }
