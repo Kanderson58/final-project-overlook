@@ -1,6 +1,8 @@
 class Room {
-  constructor() {
-
+  constructor(rooms) {
+    this.rooms = rooms;
+    this.availableRooms;
+    this.userRooms;
   }
 }
 

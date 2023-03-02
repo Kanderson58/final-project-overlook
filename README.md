@@ -1,5 +1,5 @@
 Actions that need to happen:
-[ ] Find their own room booking
+[X] Find their own room booking
 [ ] Find their own spending
 [ ] Choose a date
 [ ] Show them a list of rooms available based on date
