@@ -27,14 +27,16 @@ const loginButton = document.getElementById('loginButton');
 const password = document.getElementById('password');
 
 // Global Variables
-let currentUser, allBookings, allRooms, currentRooms;
+let currentUser, allBookings, allRooms, currentRooms, allUsers;
 
 // Event listeners
 window.addEventListener('load', fetchData().then(data => {
   chosenDate.setAttribute('value', new Date().toISOString().split('T')[0]);
   currentUser = new User(data[0].customers[3]);
+  // can eventually get rid of currentUser entirely
   allRooms = new Room(data[1].rooms);
   allBookings = new Bookings(data[2].bookings);
+  allUsers = data[0].customers;
   showLogin();
 }));
 
@@ -83,6 +85,7 @@ const showLogin = () => {
 
 const verifyLogin = () => {
   if(password.value === 'overlook2021' && username.value.substr(0, 8) === 'customer'){
+    currentUser = new User(allUsers.find(user => parseInt(username.value.substr(8, 10)) === user.id));
     MicroModal.close();
   } else if(password.value !== 'overlook2021' && username.value.substr(0, 8) === 'customer'){
     modalFooter2.innerHTML = '';
