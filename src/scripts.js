@@ -32,8 +32,6 @@ let currentUser, allBookings, allRooms, currentRooms, allUsers;
 // Event listeners
 window.addEventListener('load', fetchData().then(data => {
   chosenDate.setAttribute('value', new Date().toISOString().split('T')[0]);
-  currentUser = new User(data[0].customers[3]);
-  // can eventually get rid of currentUser entirely
   allRooms = new Room(data[1].rooms);
   allBookings = new Bookings(data[2].bookings);
   allUsers = data[0].customers;
