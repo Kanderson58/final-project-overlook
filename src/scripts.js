@@ -59,13 +59,7 @@ chooseType.addEventListener('click', () => {
 });
 
 loginButton.addEventListener('click', () => {
-  if(password.value === 'overlook2021') {
-    MicroModal.close();
-  } else {
-    modalFooter2.innerHTML = '';
-    show(modalFooter2);
-    modalFooter2.innerHTML += '<p>Incorrect password!</p>';
-  }
+  verifyLogin();
 })
 
 // Functions
@@ -85,6 +79,24 @@ const clear = (element) => {
 
 const showLogin = () => {
   MicroModal.show('modal-2')
+}
+
+const verifyLogin = () => {
+  if(password.value === 'overlook2021' && username.value.substr(0, 8) === 'customer'){
+    MicroModal.close();
+  } else if(password.value !== 'overlook2021' && username.value.substr(0, 8) === 'customer'){
+    modalFooter2.innerHTML = '';
+    show(modalFooter2);
+    modalFooter2.innerHTML += '<p>Incorrect password!</p>';
+  } else if(password.value === 'overlook2021' && username.value.substr(0, 8) !== 'customer'){
+    modalFooter2.innerHTML = '';
+    show(modalFooter2);
+    modalFooter2.innerHTML += '<p>Incorrect username!</p>';
+  } else {
+    modalFooter2.innerHTML = '';
+    show(modalFooter2);
+    modalFooter2.innerHTML += '<p>Incorrect username and password!</p>';
+  }
 }
 
 const showModal = () => {
