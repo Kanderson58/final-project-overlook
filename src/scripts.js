@@ -19,9 +19,11 @@ const myBookingsButton = document.getElementById('myBookings');
 const myExpensesButton = document.getElementById('myExpenses');
 const getRoom = document.getElementById('getRoom');
 const chosenDate = document.getElementById('chooseDate');
+const availableRooms = document.getElementById('availableRooms');
+const dateTitle = document.getElementById('dateTitle');
 
 // Global Variables
-let currentUser, allBookings, allRooms;
+let currentUser, allBookings, allRooms, currentRooms;
 
 // Event listeners
 window.addEventListener('load', fetchData().then(data => {
@@ -43,7 +45,7 @@ myExpensesButton.addEventListener('click', () => { displayExpenses() });
 
 getRoom.addEventListener('click', (event) => {
   event.preventDefault();
-  allRooms.filterByBookedStatus(allBookings.findTaken(chosenDate.value));
+  currentRooms = allRooms.filterByBookedStatus(allBookings.findTaken(chosenDate.value));
   showModal();
 });
 
@@ -58,8 +60,21 @@ const hide = (element) => {
   element.setAttribute('aria-hidden', 'true');
 }
 
+const clear = (element) => {
+  element.innerHTML = '';
+}
+
 const showModal = () => {
   MicroModal.show('modal-1');
+  clear(availableRooms);
+  dateTitle.innerText = chosenDate.value;
+  currentRooms.forEach(room => {
+    availableRooms.innerHTML += 
+      `<li>Room ${room.number}</li>
+      <li>This ${room.roomType} has ${room.numBeds} bed(s) (${room.bedSize}-sized) and costs $${room.costPerNight.toFixed(2)}.</li>`;
+    room.bidet ? availableRooms.innerHTML += 'Plus, this room has a bidet!' : null;
+    availableRooms.innerHTML += `<button id="bookNow" class="modal__btn book-now">Book Now!</button>`;
+  });
 }
 
 const displayBookings = () => {
@@ -88,6 +103,6 @@ const displayExpenses = () => {
 
   currentUser.filterBookingByUser(allBookings.bookings);
 
-  expensesSection.innerHTML = '';
+  clear(expensesSection);
   expensesSection.innerHTML += `<p>Your total spend on hotel rooms with Overlook Booking is $${currentUser.getTotalCost(allRooms.rooms)}.</p>`;
 }

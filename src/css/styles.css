@@ -53,7 +53,7 @@ h1 {
   text-shadow: 1px 1px 3px rgb(85, 85, 85);
 }
 
-h2 {
+h2:not(.modal__title) {
   font-size: 30pt;
   text-shadow: 1px 1px 2px #860c0f;
 }
@@ -63,7 +63,7 @@ h3 {
   font-weight: 600;
 }
 
-footer {
+footer:not(.modal__footer) {
   margin: 3%;
   border-top: rgb(212, 212, 212) solid 1px;
   font-size: 10pt;
@@ -97,7 +97,7 @@ footer {
   width: 200px;
 }
 
-.nav-button:hover {
+.nav-button:hover, .nav-button:focus {
   background-color: white;
   border-bottom: solid 5px #d1ae8f;
 }
@@ -108,7 +108,7 @@ footer {
   color: #575757;
 }
 
-.icon:hover {
+.icon:hover, .icon:focus {
   color: black;
 }
 
