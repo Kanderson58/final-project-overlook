@@ -18,4 +18,19 @@ const fetchData = () => {
   .catch((error) => console.log(error));
 }
 
-export { fetchData };
+const postBooking = (userID, date, roomNum) => {
+  fetch('http://localhost:3001/api/v1/bookings', {
+    method: 'POST',
+    headers: {
+      'Accept': 'application/json',
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify({ 
+      "userID": userID, 
+      "date": date, 
+      "roomNumber": roomNum
+    })
+  });
+}
+
+export { fetchData, postBooking };

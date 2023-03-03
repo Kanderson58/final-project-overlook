@@ -13,18 +13,6 @@ class User {
     return this.bookedRooms;
   }
 
-  filterOldBookings() {
-    return this.bookedRooms.filter(booking => {
-      return (new Date().toISOString().split('T')[0].replaceAll('-', '') > booking.date.replaceAll('/', ''));
-    });
-  }
-
-  filterNewBookings() {
-    return this.bookedRooms.filter(booking => {
-      return (new Date().toISOString().split('T')[0].replaceAll('-', '') < booking.date.replaceAll('/', ''));
-    });
-  }
-
   getTotalCost(allRooms) {
     const totalPrice = this.bookedRooms.reduce((total, bookedRoom) => {
       total += allRooms.find(room => room.number === bookedRoom.roomNumber).costPerNight

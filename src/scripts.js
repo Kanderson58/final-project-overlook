@@ -2,7 +2,7 @@
 import './css/styles.css';
 import './css/micromodal.css';
 import './images/lobby.jpg';
-import { fetchData } from './apiCalls';
+import { fetchData, postBooking } from './apiCalls';
 import MicroModal from 'micromodal';
 import User from './classes/User.js';
 import Room from './classes/Room.js';
@@ -11,8 +11,7 @@ import Bookings from './classes/Bookings.js';
 // Query selectors
 const findRoomSection = document.getElementById('findRoom');
 const bookingsSection = document.getElementById('bookings');
-const oldBookings = document.getElementById('old');
-const newBookings = document.getElementById('new');
+const bookingsContent = document.getElementById('bookingsContent');
 const expensesSection = document.getElementById('expenses');
 const homeButton = document.getElementById('home')
 const myBookingsButton = document.getElementById('myBookings');
@@ -26,7 +25,6 @@ const modalFooter = document.getElementById('modalFooter');
 
 // Global Variables
 let currentUser, allBookings, allRooms, currentRooms;
-// Nick said no global variables but I need these for multiple functions :(
 
 // Event listeners
 window.addEventListener('load', fetchData().then(data => {
@@ -34,7 +32,7 @@ window.addEventListener('load', fetchData().then(data => {
   currentUser = new User(data[0].customers[3]);
   allRooms = new Room(data[1].rooms);
   allBookings = new Bookings(data[2].bookings);
-}))
+}));
 
 homeButton.addEventListener('click', () => { 
   show(findRoomSection);
@@ -54,7 +52,7 @@ getRoom.addEventListener('click', (event) => {
 
 chooseType.addEventListener('click', () => {
   offerChoices();
-})
+});
 
 // Functions
 const show = (element) => {
@@ -85,27 +83,30 @@ const populateAvailable = () => {
     availableRooms.innerHTML += 
       `<li>Room ${room.number}</li>
       <li>This ${room.roomType} has ${room.numBeds} bed(s) (${room.bedSize}-sized) and costs $${room.costPerNight.toFixed(2)}.</li>`;
+
     room.bidet ? availableRooms.innerHTML += 'Plus, this room has a bidet!' : null;
-    availableRooms.innerHTML += `<button id="bookNow" class="modal__btn book-now">Book Now!</button>`;
+
+    availableRooms.innerHTML += `<button id="${room.number}" class="modal__btn book-now">Book Now!</button>`;
+
   });
+
+  currentRooms.forEach(room => document.getElementById(`${room.number}`).addEventListener('click', (event) => { bookRoom(event.target.id)}));
 }
 
 const displayBookings = () => {
   hide(findRoomSection);
   hide(expensesSection);
   show(bookingsSection);
+  populateBookings();
+}
 
-  oldBookings.innerHTML = '<h3>Your Past Bookings:</h3>';
-  newBookings.innerHTML = '<h3>Your Upcoming Bookings:</h3>';
+const populateBookings = () => {
+  bookingsContent.innerHTML = '<h3>Your Bookings:</h3>';
 
   currentUser.filterBookingByUser(allBookings.bookings);
 
-  currentUser.filterOldBookings().forEach(booking => {
-    oldBookings.innerHTML += `<p>You had a previous booking in room ${booking.roomNumber} on ${booking.date}</p>`;
-  });
-
-  currentUser.filterNewBookings().forEach(booking => {
-    newBookings.innerHTML += `<p>You have an upcoming booking in Room ${booking.roomNumber} on ${booking.date}</p>`;
+  currentUser.bookedRooms.forEach(booking => {
+    bookingsContent.innerHTML += `<p>Your booking in room ${booking.roomNumber} on ${booking.date}</p>`;
   });
 }
 
@@ -137,7 +138,6 @@ const offerChoices = () => {
   });
 
   allRooms.getAllRoomTypes().forEach(roomType => {
-    console.log(roomType);
     document.getElementById(`${roomType}`).addEventListener('click', () => {
       currentRooms = allRooms.filterByRoomType(`${roomType}`);
       populateAvailable();
@@ -150,4 +150,16 @@ const showAll = () => {
   hide(modalFooter);
   currentRooms = allRooms.filterByBookedStatus(allBookings.findTaken(chosenDate.value));
   populateAvailable();
+}
+
+const bookRoom = (num) => {
+  postBooking(currentUser.id, chosenDate.value.replaceAll('-', '/'), parseInt(num));
+  
+  fetchData().then(data => allBookings = new Bookings(data[2].bookings));
+
+  // const roomButton = document.getElementById(`${num}`)
+  // roomButton.innerText = 'Booked!';
+  // roomButton.removeEventListener('click', (event) => { bookRoom(event.target.id)});
+
+  populateBookings();
 }
