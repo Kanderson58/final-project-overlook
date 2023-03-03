@@ -1,7 +1,7 @@
 Actions that need to happen:
 [X] Find their own room booking
-[ ] Find their own spending
-[ ] Choose a date
+[X] Find their own spending
+[X] Choose a date
 [ ] Show them a list of rooms available based on date
 [ ] Filter based on roomType
 [ ] Select a room to be booked

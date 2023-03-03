@@ -3,7 +3,7 @@ body {
   font-family: 'Raleway', sans-serif;
 }
 
-main {
+main:not(.modal__content) {
   margin: 0 3% 3% 3%;
   background-size: cover;
   background-image: url("../images/lobby.jpg");
