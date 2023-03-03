@@ -1,8 +1,15 @@
 class Room {
   constructor(rooms) {
     this.rooms = rooms;
+    // is it ok to pass in the whole dataset?  should this be somewhere else?
     this.availableRooms;
-    this.userRooms;
+    this.roomTypes;
+  }
+  
+  getAllRoomTypes() {
+    this.roomTypes = [...new Set(this.rooms.map(room => room.roomType))];
+    // or I could just return this?  Do I need a this.roomTypes?
+    return this.roomTypes;
   }
 
   filterByBookedStatus(booked) {
@@ -10,24 +17,24 @@ class Room {
     return this.availableRooms;
   }
 
-  filterByRoomType()  {
-
+  filterByRoomType(roomType)  {
+    return this.availableRooms.filter(room => room.roomType === roomType);
   }
 
   filterByBidet() {
-
+    return this.availableRooms.filter(room => room.bidet);
   }
 
-  filterByBedSize() {
-
+  filterByBedSize(size) {
+    return this.availableRooms.filter(room => room.bedSize === size);
   }
 
-  filterByNumBeds() {
-
+  filterByNumBeds(num) {
+    return this.availableRooms.filter(room => room.numBeds === num);
   }
 
-  filterByCost() {
-
+  filterByCost(max) {
+    return this.availableRooms.filter(room => room.costPerNight < max);
   }
 }
 

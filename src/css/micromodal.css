@@ -23,6 +23,10 @@
   border: 1px solid #4e1621;
 }
 
+.room-type {
+  margin-left: 5%;
+}
+
 .modal {
   font-family: 'Raleway', sans-serif;
 }
@@ -151,4 +155,8 @@
 .micromodal-slide .modal__container,
 .micromodal-slide .modal__overlay {
   will-change: transform;
+}
+
+.hidden {
+  display: none;
 }

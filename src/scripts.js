@@ -21,9 +21,12 @@ const getRoom = document.getElementById('getRoom');
 const chosenDate = document.getElementById('chooseDate');
 const availableRooms = document.getElementById('availableRooms');
 const dateTitle = document.getElementById('dateTitle');
+const chooseType = document.getElementById('chooseType');
+const modalFooter = document.getElementById('modalFooter');
 
 // Global Variables
 let currentUser, allBookings, allRooms, currentRooms;
+// Nick said no global variables but I need these for multiple functions :(
 
 // Event listeners
 window.addEventListener('load', fetchData().then(data => {
@@ -36,7 +39,7 @@ window.addEventListener('load', fetchData().then(data => {
 homeButton.addEventListener('click', () => { 
   show(findRoomSection);
   hide(bookingsSection);
-  hide(expensesSection)
+  hide(expensesSection);
 });
 
 myBookingsButton.addEventListener('click', () => { displayBookings() });
@@ -48,6 +51,10 @@ getRoom.addEventListener('click', (event) => {
   currentRooms = allRooms.filterByBookedStatus(allBookings.findTaken(chosenDate.value));
   showModal();
 });
+
+chooseType.addEventListener('click', () => {
+  offerChoices();
+})
 
 // Functions
 const show = (element) => {
@@ -66,8 +73,14 @@ const clear = (element) => {
 
 const showModal = () => {
   MicroModal.show('modal-1');
+  show(chooseType);
   clear(availableRooms);
   dateTitle.innerText = chosenDate.value;
+  populateAvailable();
+}
+
+const populateAvailable = () => {
+  clear(availableRooms);
   currentRooms.forEach(room => {
     availableRooms.innerHTML += 
       `<li>Room ${room.number}</li>
@@ -105,4 +118,36 @@ const displayExpenses = () => {
 
   clear(expensesSection);
   expensesSection.innerHTML += `<p>Your total spend on hotel rooms with Overlook Booking is $${currentUser.getTotalCost(allRooms.rooms)}.</p>`;
+}
+
+const offerChoices = () => {
+  hide(chooseType);
+  clear(modalFooter);
+  show(modalFooter);
+
+  allRooms.getAllRoomTypes().forEach(roomType => {
+  modalFooter.innerHTML += 
+    `<input type="radio" id="${roomType}" class="room-type" value="${roomType}" name="roomType"><label for="${roomType}">${roomType}</label>`;
+  });
+
+  modalFooter.innerHTML += '<button id="showAll" class="modal__btn">Show All</button>'
+
+  document.getElementById('showAll').addEventListener('click', () => {
+    showAll()
+  });
+
+  allRooms.getAllRoomTypes().forEach(roomType => {
+    console.log(roomType);
+    document.getElementById(`${roomType}`).addEventListener('click', () => {
+      currentRooms = allRooms.filterByRoomType(`${roomType}`);
+      populateAvailable();
+    });
+  });
+}
+
+const showAll = () => {
+  show(chooseType);
+  hide(modalFooter);
+  currentRooms = allRooms.filterByBookedStatus(allBookings.findTaken(chosenDate.value));
+  populateAvailable();
 }
