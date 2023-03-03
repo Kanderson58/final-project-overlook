@@ -26,6 +26,7 @@ const modalFooter = document.getElementById('modalFooter');
 
 // Global Variables
 let currentUser, allBookings, allRooms, currentRooms;
+// Nick said no global variables but I need these for multiple functions :(
 
 // Event listeners
 window.addEventListener('load', fetchData().then(data => {
@@ -136,6 +137,7 @@ const offerChoices = () => {
   });
 
   allRooms.getAllRoomTypes().forEach(roomType => {
+    console.log(roomType);
     document.getElementById(`${roomType}`).addEventListener('click', () => {
       currentRooms = allRooms.filterByRoomType(`${roomType}`);
       populateAvailable();
