@@ -72,6 +72,7 @@ const clear = (element) => {
 const showModal = () => {
   MicroModal.show('modal-1');
   show(chooseType);
+  hide(modalFooter);
   clear(availableRooms);
   dateTitle.innerText = chosenDate.value;
   populateAvailable();
@@ -79,6 +80,12 @@ const showModal = () => {
 
 const populateAvailable = () => {
   clear(availableRooms);
+  
+  if(currentRooms.length === 0) {
+    availableRooms.innerHTML +=
+      `We're sorry!  There are no rooms of that type available on ${chosenDate.value}.  Please try selecting another type or date!`
+  }
+
   currentRooms.forEach(room => {
     availableRooms.innerHTML += 
       `<li>Room ${room.number}</li>
@@ -140,7 +147,7 @@ const offerChoices = () => {
   allRooms.getAllRoomTypes().forEach(roomType => {
     document.getElementById(`${roomType}`).addEventListener('click', () => {
       currentRooms = allRooms.filterByRoomType(`${roomType}`);
-      populateAvailable();
+        populateAvailable();
     });
   });
 }
@@ -157,9 +164,9 @@ const bookRoom = (num) => {
   
   fetchData().then(data => allBookings = new Bookings(data[2].bookings));
 
-  // const roomButton = document.getElementById(`${num}`)
-  // roomButton.innerText = 'Booked!';
-  // roomButton.removeEventListener('click', (event) => { bookRoom(event.target.id)});
+  const roomButton = document.getElementById(`${num}`)
+  roomButton.innerText = 'Booked!';
+  roomButton.disabled = 'true';
 
   populateBookings();
 }
