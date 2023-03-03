@@ -27,6 +27,27 @@
   margin-left: 5%;
 }
 
+.none-available {
+  font-size: 20pt;
+  margin: 10%;
+  text-align: center;
+}
+
+.emphasize {
+  padding: 0 1%;
+  font-size: larger;
+  font-style: oblique;
+  font-family: Helvetica, sans-serif;
+  color: #7b7b7b;
+}
+
+.single-booking {
+  background-color:#fadbe055;
+  padding: 2%;
+  border-radius: 5px;
+  border: solid 1px #4e1621;
+}
+
 .modal {
   font-family: 'Raleway', sans-serif;
 }
@@ -44,6 +65,7 @@
   background-color: #fff;
   padding: 30px;
   min-width: 800px;
+  max-width: 60%;
   max-height: 500px;
   border-radius: 4px;
   box-sizing: border-box;

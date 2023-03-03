@@ -83,7 +83,7 @@ const populateAvailable = () => {
   
   if(currentRooms.length === 0) {
     availableRooms.innerHTML +=
-      `We're sorry!  There are no rooms of that type available on ${chosenDate.value}.  Please try selecting another type or date!`
+      `<li class="none-available">We're sorry!  There are no rooms of that type available on ${chosenDate.value}.  Please try selecting another type or date!</li>`
   }
 
   currentRooms.forEach(room => {
@@ -113,7 +113,11 @@ const populateBookings = () => {
   currentUser.filterBookingByUser(allBookings.bookings);
 
   currentUser.bookedRooms.forEach(booking => {
-    bookingsContent.innerHTML += `<p>Your booking in room ${booking.roomNumber} on ${booking.date}</p>`;
+    if(parseInt(new Date().toISOString().split('T')[0].replaceAll('-', '')) > parseInt(booking.date.replaceAll('/', ''))){
+      bookingsContent.innerHTML += `<p class="single-booking">Your previous booking was in <span class="emphasize">Room ${booking.roomNumber}</span> on <span class="emphasize">${booking.date}.</span></p>`;
+    } else {
+      bookingsContent.innerHTML += `<p class="single-booking">Your upcoming booking is in <span class="emphasize">Room ${booking.roomNumber}</span> on <span class="emphasize">${booking.date}!</span> Enjoy your stay!</p>`;
+    }
   });
 }
 
@@ -125,7 +129,7 @@ const displayExpenses = () => {
   currentUser.filterBookingByUser(allBookings.bookings);
 
   clear(expensesSection);
-  expensesSection.innerHTML += `<p>Your total spend on hotel rooms with Overlook Booking is $${currentUser.getTotalCost(allRooms.rooms)}.</p>`;
+  expensesSection.innerHTML += `<p class="expenses-section">Your total spent on hotel rooms with Overlook Booking is <span class="emphasize">$${currentUser.getTotalCost(allRooms.rooms)}.</span></p>`;
 }
 
 const offerChoices = () => {
