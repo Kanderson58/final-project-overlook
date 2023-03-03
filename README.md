@@ -4,7 +4,7 @@ Actions that need to happen:
 [X] Choose a date
 [X] Show them a list of rooms available based on date
 [X] Filter based on roomType
-[ ] Select a room to be booked
+[X] Select a room to be booked
 [ ] Error handle if there's no rooms
 [ ] Create accessibility branch
 [ ] Be able to log in with user and password
