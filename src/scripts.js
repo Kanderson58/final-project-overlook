@@ -22,7 +22,9 @@ const availableRooms = document.getElementById('availableRooms');
 const dateTitle = document.getElementById('dateTitle');
 const chooseType = document.getElementById('chooseType');
 const modalFooter = document.getElementById('modalFooter');
+const modalFooter2 = document.getElementById('modalFooter2');
 const loginButton = document.getElementById('loginButton');
+const password = document.getElementById('password');
 
 // Global Variables
 let currentUser, allBookings, allRooms, currentRooms;
@@ -57,7 +59,13 @@ chooseType.addEventListener('click', () => {
 });
 
 loginButton.addEventListener('click', () => {
-  MicroModal.close();
+  if(password.value === 'overlook2021') {
+    MicroModal.close();
+  } else {
+    modalFooter2.innerHTML = '';
+    show(modalFooter2);
+    modalFooter2.innerHTML += '<p>Incorrect password!</p>';
+  }
 })
 
 // Functions
@@ -126,6 +134,7 @@ const populateBookings = () => {
     if(parseInt(new Date().toISOString().split('T')[0].replaceAll('-', '')) > parseInt(booking.date.replaceAll('/', ''))){
       bookingsContent.innerHTML += `<p class="single-booking" tabindex="0">Your previous booking was in <span class="emphasize">Room ${booking.roomNumber}</span> on <span class="emphasize">${booking.date}.</span></p>`;
     } else {
+      // find a way to sort so the upcoming bookings are the soonest ones
       bookingsContent.innerHTML += `<p class="single-booking" tabindex="0">Your upcoming booking is in <span class="emphasize">Room ${booking.roomNumber}</span> on <span class="emphasize">${booking.date}!</span> Enjoy your stay!</p>`;
     }
   });
