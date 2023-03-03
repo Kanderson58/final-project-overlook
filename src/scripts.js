@@ -114,9 +114,9 @@ const populateBookings = () => {
 
   currentUser.bookedRooms.forEach(booking => {
     if(parseInt(new Date().toISOString().split('T')[0].replaceAll('-', '')) > parseInt(booking.date.replaceAll('/', ''))){
-      bookingsContent.innerHTML += `<p class="single-booking">Your previous booking was in <span class="emphasize">Room ${booking.roomNumber}</span> on <span class="emphasize">${booking.date}.</span></p>`;
+      bookingsContent.innerHTML += `<p class="single-booking" tabindex="0">Your previous booking was in <span class="emphasize">Room ${booking.roomNumber}</span> on <span class="emphasize">${booking.date}.</span></p>`;
     } else {
-      bookingsContent.innerHTML += `<p class="single-booking">Your upcoming booking is in <span class="emphasize">Room ${booking.roomNumber}</span> on <span class="emphasize">${booking.date}!</span> Enjoy your stay!</p>`;
+      bookingsContent.innerHTML += `<p class="single-booking" tabindex="0">Your upcoming booking is in <span class="emphasize">Room ${booking.roomNumber}</span> on <span class="emphasize">${booking.date}!</span> Enjoy your stay!</p>`;
     }
   });
 }
@@ -129,7 +129,7 @@ const displayExpenses = () => {
   currentUser.filterBookingByUser(allBookings.bookings);
 
   clear(expensesSection);
-  expensesSection.innerHTML += `<p class="expenses-section">Your total spent on hotel rooms with Overlook Booking is <span class="emphasize">$${currentUser.getTotalCost(allRooms.rooms)}.</span></p>`;
+  expensesSection.innerHTML += `<p class="expenses-section" tabindex="0">Your total spent on hotel rooms with Overlook Booking is <span class="emphasize">$${currentUser.getTotalCost(allRooms.rooms)}.</span></p>`;
 }
 
 const offerChoices = () => {
@@ -137,9 +137,9 @@ const offerChoices = () => {
   clear(modalFooter);
   show(modalFooter);
 
-  allRooms.getAllRoomTypes().forEach(roomType => {
+  allRooms.getAllRoomTypes().forEach((roomType, index) => {
   modalFooter.innerHTML += 
-    `<input type="radio" id="${roomType}" class="room-type" value="${roomType}" name="roomType"><label for="${roomType}">${roomType}</label>`;
+    `<input type="radio" id="${roomType}" class="room-type" value="${roomType}" name="roomType" tabindex="0"><label for="${roomType}">${roomType}</label>`;
   });
 
   modalFooter.innerHTML += '<button id="showAll" class="modal__btn">Show All</button>'
