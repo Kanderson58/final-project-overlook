@@ -1,12 +1,12 @@
 class Room {
   constructor(rooms) {
-    this.rooms = rooms;
+    this.allRooms = rooms;
     this.availableRooms;
     this.userRooms;
   }
 
   filterByBookedStatus(booked) {
-    this.availableRooms = this.rooms.filter(room => !booked.map(booked => booked.roomNumber).includes(room.number));
+    this.availableRooms = this.allRooms.filter(room => !booked.map(booked => booked.roomNumber).includes(room.number));
     return this.availableRooms;
   }
 

@@ -21,14 +21,14 @@ const getRoom = document.getElementById('getRoom');
 const chosenDate = document.getElementById('chooseDate');
 
 // Global Variables
-let currentUser, allBookings, allRooms;
+let currentUser, bookings, rooms;
 
 // Event listeners
 window.addEventListener('load', fetchData().then(data => {
   chosenDate.setAttribute('value', new Date().toISOString().split('T')[0]);
   currentUser = new User(data[0].customers[3]);
-  allRooms = new Room(data[1].rooms);
-  allBookings = new Bookings(data[2].bookings);
+  rooms = new Room(data[1].rooms);
+  bookings = new Bookings(data[2].bookings);
 }))
 
 homeButton.addEventListener('click', () => { 
@@ -43,7 +43,7 @@ myExpensesButton.addEventListener('click', () => { displayExpenses() });
 
 getRoom.addEventListener('click', (event) => {
   event.preventDefault();
-  allRooms.filterByBookedStatus(allBookings.findTaken(chosenDate.value));
+  rooms.filterByBookedStatus(bookings.findTaken(chosenDate.value));
   showModal();
 });
 
@@ -70,7 +70,7 @@ const displayBookings = () => {
   oldBookings.innerHTML = '<h3>Your Past Bookings:</h3>';
   newBookings.innerHTML = '<h3>Your Upcoming Bookings:</h3>';
 
-  currentUser.filterBookingByUser(allBookings.bookings);
+  currentUser.filterBookingByUser(bookings.allBookings);
 
   currentUser.filterOldBookings().forEach(booking => {
     oldBookings.innerHTML += `<p>You had a previous booking in room ${booking.roomNumber} on ${booking.date}</p>`;
@@ -86,8 +86,8 @@ const displayExpenses = () => {
   hide(bookingsSection);
   show(expensesSection);
 
-  currentUser.filterBookingByUser(allBookings.bookings);
+  currentUser.filterBookingByUser(bookings.allBookings);
 
   expensesSection.innerHTML = '';
-  expensesSection.innerHTML += `<p>Your total spend on hotel rooms with Overlook Booking is $${currentUser.getTotalCost(allRooms.rooms)}.</p>`;
+  expensesSection.innerHTML += `<p>Your total spend on hotel rooms with Overlook Booking is $${currentUser.getTotalCost(rooms.allRooms)}.</p>`;
 }

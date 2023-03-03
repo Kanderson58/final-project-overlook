@@ -15,7 +15,7 @@ describe('Room', () => {
   });
 
   it('should store all the rooms at the hotel', () => {
-    expect(room.rooms.length).to.equal(5);
+    expect(room.allRooms.length).to.equal(5);
   });
 
   it('should filter according to the already booked rooms for that date', () => {

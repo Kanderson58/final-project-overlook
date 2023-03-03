@@ -15,7 +15,7 @@ describe('Bookings', () => {
   });
 
   it('should store all existing bookings', () => {
-    expect(bookingsInst.bookings.length).to.equal(10);
+    expect(bookingsInst.allBookings.length).to.equal(10);
   });
 
   it('should find taken bookings based on a date', () => {

@@ -1,11 +1,11 @@
 class Bookings {
   constructor(bookingInfo) {
-    this.bookings = bookingInfo;
+    this.allBookings = bookingInfo;
     this.currentBookings = [];
   }
 
   findTaken(chosenDate) {
-    this.currentBookings = this.bookings.filter(booking => booking.date === chosenDate.replaceAll('-', '/'));
+    this.currentBookings = this.allBookings.filter(booking => booking.date === chosenDate.replaceAll('-', '/'));
     return this.currentBookings;
   }
 }
