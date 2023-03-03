@@ -157,9 +157,9 @@ const bookRoom = (num) => {
   
   fetchData().then(data => allBookings = new Bookings(data[2].bookings));
 
-  // const roomButton = document.getElementById(`${num}`)
-  // roomButton.innerText = 'Booked!';
-  // roomButton.removeEventListener('click', (event) => { bookRoom(event.target.id)});
+  const roomButton = document.getElementById(`${num}`)
+  roomButton.innerText = 'Booked!';
+  roomButton.disabled = 'true';
 
   populateBookings();
 }
