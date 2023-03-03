@@ -22,16 +22,20 @@ const availableRooms = document.getElementById('availableRooms');
 const dateTitle = document.getElementById('dateTitle');
 const chooseType = document.getElementById('chooseType');
 const modalFooter = document.getElementById('modalFooter');
+const modalFooter2 = document.getElementById('modalFooter2');
+const loginButton = document.getElementById('loginButton');
+const password = document.getElementById('password');
 
 // Global Variables
-let currentUser, allBookings, allRooms, currentRooms;
+let currentUser, allBookings, allRooms, currentRooms, allUsers;
 
 // Event listeners
 window.addEventListener('load', fetchData().then(data => {
   chosenDate.setAttribute('value', new Date().toISOString().split('T')[0]);
-  currentUser = new User(data[0].customers[3]);
   allRooms = new Room(data[1].rooms);
   allBookings = new Bookings(data[2].bookings);
+  allUsers = data[0].customers;
+  showLogin();
 }));
 
 homeButton.addEventListener('click', () => { 
@@ -54,6 +58,10 @@ chooseType.addEventListener('click', () => {
   offerChoices();
 });
 
+loginButton.addEventListener('click', () => {
+  verifyLogin();
+})
+
 // Functions
 const show = (element) => {
   element.classList.remove('hidden');
@@ -67,6 +75,29 @@ const hide = (element) => {
 
 const clear = (element) => {
   element.innerHTML = '';
+}
+
+const showLogin = () => {
+  MicroModal.show('modal-2')
+}
+
+const verifyLogin = () => {
+  if(password.value === 'overlook2021' && username.value.substr(0, 8) === 'customer'){
+    currentUser = new User(allUsers.find(user => parseInt(username.value.substr(8, 10)) === user.id));
+    MicroModal.close();
+  } else if(password.value !== 'overlook2021' && username.value.substr(0, 8) === 'customer'){
+    modalFooter2.innerHTML = '';
+    show(modalFooter2);
+    modalFooter2.innerHTML += '<p>Incorrect password!</p>';
+  } else if(password.value === 'overlook2021' && username.value.substr(0, 8) !== 'customer'){
+    modalFooter2.innerHTML = '';
+    show(modalFooter2);
+    modalFooter2.innerHTML += '<p>Incorrect username!</p>';
+  } else {
+    modalFooter2.innerHTML = '';
+    show(modalFooter2);
+    modalFooter2.innerHTML += '<p>Incorrect username and password!</p>';
+  }
 }
 
 const showModal = () => {
@@ -116,6 +147,7 @@ const populateBookings = () => {
     if(parseInt(new Date().toISOString().split('T')[0].replaceAll('-', '')) > parseInt(booking.date.replaceAll('/', ''))){
       bookingsContent.innerHTML += `<p class="single-booking" tabindex="0">Your previous booking was in <span class="emphasize">Room ${booking.roomNumber}</span> on <span class="emphasize">${booking.date}.</span></p>`;
     } else {
+      // find a way to sort so the upcoming bookings are the soonest ones
       bookingsContent.innerHTML += `<p class="single-booking" tabindex="0">Your upcoming booking is in <span class="emphasize">Room ${booking.roomNumber}</span> on <span class="emphasize">${booking.date}!</span> Enjoy your stay!</p>`;
     }
   });
