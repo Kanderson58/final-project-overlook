@@ -73,7 +73,7 @@ const showModal = () => {
       `<li>Room ${room.number}</li>
       <li>This ${room.roomType} has ${room.numBeds} bed(s) (${room.bedSize}-sized) and costs $${room.costPerNight.toFixed(2)}.</li>`;
     room.bidet ? availableRooms.innerHTML += 'Plus, this room has a bidet!' : null;
-    availableRooms.innerHTML += `<button id="bookNow" class="book-now">Book Now!</button>`;
+    availableRooms.innerHTML += `<button id="bookNow" class="modal__btn book-now">Book Now!</button>`;
   });
 }
 
