@@ -22,6 +22,7 @@ const availableRooms = document.getElementById('availableRooms');
 const dateTitle = document.getElementById('dateTitle');
 const chooseType = document.getElementById('chooseType');
 const modalFooter = document.getElementById('modalFooter');
+const loginButton = document.getElementById('loginButton');
 
 // Global Variables
 let currentUser, allBookings, allRooms, currentRooms;
@@ -32,6 +33,7 @@ window.addEventListener('load', fetchData().then(data => {
   currentUser = new User(data[0].customers[3]);
   allRooms = new Room(data[1].rooms);
   allBookings = new Bookings(data[2].bookings);
+  showLogin();
 }));
 
 homeButton.addEventListener('click', () => { 
@@ -54,6 +56,10 @@ chooseType.addEventListener('click', () => {
   offerChoices();
 });
 
+loginButton.addEventListener('click', () => {
+  MicroModal.close();
+})
+
 // Functions
 const show = (element) => {
   element.classList.remove('hidden');
@@ -67,6 +73,10 @@ const hide = (element) => {
 
 const clear = (element) => {
   element.innerHTML = '';
+}
+
+const showLogin = () => {
+  MicroModal.show('modal-2')
 }
 
 const showModal = () => {
