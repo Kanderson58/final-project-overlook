@@ -53,7 +53,7 @@ h1 {
   text-shadow: 1px 1px 3px rgb(85, 85, 85);
 }
 
-h2 {
+h2:not(.modal__title) {
   font-size: 30pt;
   text-shadow: 1px 1px 2px #860c0f;
 }

@@ -1,5 +1,42 @@
+.center {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.date-title {
+  font-size: 25pt;
+  padding: 0 2%;
+}
+
+.available-rooms {
+  font-size: 15pt;
+  height: 300px;
+  width: 100%;
+  overflow-y: scroll;
+  overscroll-behavior: contain;
+  align-items: center;
+  list-style-type: none;
+  padding: 0;
+  border: 2px;
+  border-style: solid;
+  border-image: linear-gradient(to bottom right, #fadbe0, #4e1621, #fadbe0) 1;
+}
+
+.book-now {
+  border: 1px solid #4e1621;
+  border-radius: 10px;
+  margin-bottom: 2%;
+}
+
+.book-now:hover {
+  color: white;
+  background-color: #4e1621;
+  border-radius: 10px;
+}
+
 .modal {
-  font-family: -apple-system,BlinkMacSystemFont,avenir next,avenir,helvetica neue,helvetica,ubuntu,roboto,noto,segoe ui,arial,sans-serif;
+  font-family: 'Raleway', sans-serif;
 }
 
 .modal__overlay {
@@ -9,35 +46,30 @@
   right: 0;
   bottom: 0;
   background: rgba(0,0,0,0.6);
-  display: flex;
-  justify-content: center;
-  align-items: center;
 }
 
 .modal__container {
   background-color: #fff;
   padding: 30px;
-  max-width: 500px;
-  max-height: 100vh;
+  min-width: 800px;
+  max-height: 500px;
   border-radius: 4px;
-  overflow-y: auto;
   box-sizing: border-box;
 }
 
 .modal__header {
   display: flex;
-  justify-content: space-between;
   align-items: center;
 }
 
 .modal__title {
   margin-top: 0;
   margin-bottom: 0;
-  font-weight: 600;
-  font-size: 1.25rem;
+  font-weight: 700;
+  font-size: 20pt;
   line-height: 1.25;
-  color: #00449e;
-  box-sizing: border-box;
+  width: 100%;
+  box-sizing: border-box; 
 }
 
 .modal__close {
@@ -48,8 +80,8 @@
 .modal__header .modal__close:before { content: "\2715"; }
 
 .modal__content {
-  margin-top: 2rem;
-  margin-bottom: 2rem;
+  /* margin-top: 2%;
+  margin-bottom: 2%; */
   line-height: 1.5;
   color: rgba(0,0,0,.8);
 }
@@ -88,7 +120,7 @@
 }
 
 .modal__btn-primary {
-  background-color: #00449e;
+  background-color: #717171;
   color: #fff;
 }
 
