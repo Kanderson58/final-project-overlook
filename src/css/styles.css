@@ -117,7 +117,7 @@ footer:not(.modal__footer) {
   margin: 0 5%;
 }
 
-.date-selector, .bookings, .expenses {
+.date-selector, .bookings, .expenses, .manager-dash {
   height: 400px;
   width: 80%;
   margin: 10% 0;

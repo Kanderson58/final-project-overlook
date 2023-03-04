@@ -13,7 +13,7 @@
     <h1>Overlook Booking</h1>
     <p class="motto">Simply the best! ™️</p>
   </header>
-  <nav class="row">
+  <nav id="nav" class="row">
     <div class="nav-buttons row">
       <button class="nav-button" id="home"><span class="material-symbols-outlined">Home</span>Home</button><button class="nav-button" id="myBookings"><span class="material-symbols-outlined">bookmark</span>My Bookings</button><button class="nav-button" id="myExpenses"><span class="material-symbols-outlined">face</span>My Expenses</button>
     </div>
@@ -24,6 +24,9 @@
     </div>
   </nav>
   <main class="row">
+    <section id="managerDashboard" class="manager-dash hidden" aria-hidden="true">
+      <ul id="managerAvailable">Today's Available Rooms - there are <span id="numAvailable"></span> available today.</ul>
+    </section>
     <section class ="date-selector column" id="findRoom" aria-hidden="false">
       <h2>Find Me A Room:</h2>
       <form class="row">

@@ -7,6 +7,7 @@ import MicroModal from 'micromodal';
 import User from './classes/User.js';
 import Room from './classes/Room.js';
 import Bookings from './classes/Bookings.js';
+import Manager from './classes/Manager';
 
 // Query selectors
 const findRoomSection = document.getElementById('findRoom');
@@ -26,17 +27,23 @@ const modalFooter2 = document.getElementById('modalFooter2');
 const loginButton = document.getElementById('loginButton');
 const password = document.getElementById('password');
 const seeAllButton = document.getElementById('seeAllBookings');
+const nav = document.getElementById('nav');
 
-// Global Variables
-let currentUser, allBookings, allRooms, currentRooms, allUsers;
+// Manager dashboard query selectors
+const managerDashboard = document.getElementById('managerDashboard');
+const managerAvailable = document.getElementById('managerAvailable')
+const numAvailable = document.getElementById('numAvailable');
+
+// Global variables
+let currentUser, allBookings, allRooms, currentRooms, manager;
 
 // Event listeners
 window.addEventListener('load', fetchData().then(data => {
   chosenDate.setAttribute('value', new Date().toISOString().split('T')[0]);
   allRooms = new Room(data[1].rooms);
   allBookings = new Bookings(data[2].bookings);
-  allUsers = data[0].customers;
   showLogin();
+  manager = new Manager(allBookings, allRooms, data[0].customers);
 }));
 
 homeButton.addEventListener('click', () => { 
@@ -87,14 +94,20 @@ const showLogin = () => {
 }
 
 const verifyLogin = () => {
-  if(password.value === 'overlook2021' && username.value.substr(0, 8) === 'customer'){
+  if(password.value === 'overlook2021' && username.value.substr(0, 8) === 'customer' && username.value.length < 11){
     hide(modalFooter2);
     getSingleUser(username.value.substr(8, 10)).then(data => currentUser = new User(data));
+    loginButton.disabled = 'true';
     loginButton.innerHTML = '<span class="material-symbols-outlined checkmark">check</span>'
     setTimeout(MicroModal.close, 1200);
-  } else if(password.value !== 'overlook2021' && username.value.substr(0, 8) === 'customer'){
+  } else if(username.value === 'manager' && password.value === 'overlook2021'){
+    loginButton.disabled = 'true';
+    loginButton.innerHTML = '<span class="material-symbols-outlined checkmark">check</span><p>Hello Manager!</p>'
+    setTimeout(MicroModal.close, 1200);
+    displayManagerDashboard();
+  } else if(password.value !== 'overlook2021' && username.value.substr(0, 8) === 'customer' && username.value.length < 11 || username.value === 'manager'){
     giveFeedback('password');
-  } else if(password.value === 'overlook2021' && username.value.substr(0, 8) !== 'customer'){
+  } else if(password.value === 'overlook2021' && username.value.substr(0, 8) !== 'customer' ||  username.value.length >= 11){
     giveFeedback('username');
   } else {
     giveFeedback('username and password')
@@ -176,7 +189,7 @@ const offerChoices = () => {
   clear(modalFooter);
   show(modalFooter);
 
-  allRooms.getAllRoomTypes().forEach((roomType, index) => {
+  allRooms.getAllRoomTypes().forEach((roomType) => {
   modalFooter.innerHTML += 
     `<input type="radio" id="${roomType}" class="room-type" value="${roomType}" name="roomType" tabindex="0"><label for="${roomType}">${roomType}</label>`;
   });
@@ -213,4 +226,18 @@ const bookRoom = (num) => {
   roomButton.disabled = 'true';
 
   populateBookings();
+}
+
+const displayManagerDashboard = () => {
+  // could make the hide/show functions accept an array of items and iterate through those to perform each action, so that I can pass in all this shit at once
+  hide(nav);
+  hide(findRoomSection);
+  show(managerDashboard);
+
+  numAvailable.innerText = manager.getRoomsAvailableToday().length
+  manager.getRoomsAvailableToday().forEach(room => {
+    managerAvailable.innerHTML += `<li>Room ${room.number} (${room.roomType} with ${room.numBeds} ${room.bedSize} bed(s))</li>`
+  })
+
+  console.log(manager.calculateRevenue())
 }
