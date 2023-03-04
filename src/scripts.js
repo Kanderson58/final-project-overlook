@@ -28,6 +28,7 @@ const loginButton = document.getElementById('loginButton');
 const password = document.getElementById('password');
 const seeAllButton = document.getElementById('seeAllBookings');
 const nav = document.getElementById('nav');
+const revenue = document.getElementById('revenue');
 
 // Manager dashboard query selectors
 const managerDashboard = document.getElementById('managerDashboard');
@@ -239,5 +240,5 @@ const displayManagerDashboard = () => {
     managerAvailable.innerHTML += `<li>Room ${room.number} (${room.roomType} with ${room.numBeds} ${room.bedSize} bed(s))</li>`
   })
 
-  console.log(manager.calculateRevenue())
+  revenue.innerText = `Today's revenue so far is $${manager.calculateRevenue()}.`
 }
