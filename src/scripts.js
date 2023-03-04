@@ -83,21 +83,24 @@ const showLogin = () => {
 
 const verifyLogin = () => {
   if(password.value === 'overlook2021' && username.value.substr(0, 8) === 'customer'){
+    hide(modalFooter2);
     currentUser = new User(allUsers.find(user => parseInt(username.value.substr(8, 10)) === user.id));
-    MicroModal.close();
+    // does this need to be in a class?  an allUsers
+    loginButton.innerHTML = '<span class="material-symbols-outlined checkmark">check</span>'
+    setTimeout(MicroModal.close, 1200);
   } else if(password.value !== 'overlook2021' && username.value.substr(0, 8) === 'customer'){
-    modalFooter2.innerHTML = '';
-    show(modalFooter2);
-    modalFooter2.innerHTML += '<p>Incorrect password!</p>';
+    giveFeedback('password');
   } else if(password.value === 'overlook2021' && username.value.substr(0, 8) !== 'customer'){
-    modalFooter2.innerHTML = '';
-    show(modalFooter2);
-    modalFooter2.innerHTML += '<p>Incorrect username!</p>';
+    giveFeedback('username');
   } else {
-    modalFooter2.innerHTML = '';
-    show(modalFooter2);
-    modalFooter2.innerHTML += '<p>Incorrect username and password!</p>';
+    giveFeedback('username and password')
   }
+}
+
+const giveFeedback = (reason) => {
+  modalFooter2.innerHTML = '';
+  show(modalFooter2);
+  modalFooter2.innerHTML += `<p class="wrong">Incorrect ${reason}!</p>`;
 }
 
 const showModal = () => {
@@ -125,7 +128,6 @@ const populateAvailable = () => {
     room.bidet ? availableRooms.innerHTML += 'Plus, this room has a bidet!' : null;
 
     availableRooms.innerHTML += `<button id="${room.number}" class="modal__btn book-now">Book Now!</button>`;
-
   });
 
   currentRooms.forEach(room => document.getElementById(`${room.number}`).addEventListener('click', (event) => { bookRoom(event.target.id)}));

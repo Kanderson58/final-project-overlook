@@ -67,16 +67,20 @@
   <!-- Start Modal 2 -->
   <div class="modal micromodal-slide" id="modal-2" aria-hidden="true">
     <div class="modal__overlay center" tabindex="-1">
-      <div class="modal__container" role="dialog" aria-modal="true" aria-labelledby="modal-2-title">
+      <div class="modal__container-2" role="dialog" aria-modal="true" aria-labelledby="modal-2-title">
         <header class="modal__header">
           <h2 class="modal__title center" id="modal-2-title">Login</h2>
         </header>
-        <main class="modal__content column" id="modal-2-content">
-          <label for="username">Username:</label><input type="text" id="username">
-          <label for="password">Password:</label><input type="text" id="password">
-        </main>
+        <form class="modal__content column center login" id="modal-2-content">
+          <div class="username column">
+            <label for="username">Username:</label class="username-label"><input type="text" id="username" class="password-input">
+          </div>
+          <div class="password column">
+            <label for="password" class="password-label">Password:</label><input type="text" id="password" class="password-input">
+          </div>
+        </form>
         <div class="modal__footer center">
-            <button id="loginButton">Submit</button>
+            <button id="loginButton" class="submit">Submit</button>
         </div>
         <div id="modalFooter2" class="center hidden" aria-hidden="true"></div>
       </div>
