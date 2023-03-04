@@ -48,6 +48,50 @@
   border: solid 1px #4e1621;
 }
 
+.login {
+  width: 100%;
+}
+
+.username {
+  margin: 3% 0 1%;
+}
+
+.password {
+  margin: 1% 0 3%;
+}
+
+.username-input, .password-input {
+  width: 150px;
+}
+
+.submit {
+  border: 1px black solid;
+  padding: 3%;
+  border-radius: 5px;
+  margin-top: 3%;
+  background-color: #e3e3e385;
+}
+
+.checkmark {
+  color: green;
+  font-size: 25pt;
+  font-weight: 900;
+}
+
+.wrong {
+  color: red;
+}
+
+.modal__container-2 {
+  background-color: #fff;
+  padding: 30px;
+  min-width: 350px;
+  max-width: 60%;
+  max-height: 500px;
+  border-radius: 4px;
+  box-sizing: border-box;
+}
+
 .modal {
   font-family: 'Raleway', sans-serif;
 }
@@ -118,6 +162,27 @@
 
 .book-now {
   margin-bottom: 2%;
+}
+
+.book-now:disabled {
+  color: white;
+  background-image: linear-gradient(to bottom right, #fadbe0, #c79da4, #4e1621, #c79da4, #fadbe0);
+  font-family: Helvetica, sans-serif;
+  font-size: larger;
+  border: none;
+  animation-name: spin;
+  animation-duration: 2000ms;
+  animation-iteration-count: 1;
+  animation-timing-function: linear; 
+}
+
+@keyframes spin {
+  from {
+      transform:rotate(0deg);
+  }
+  to {
+      transform:rotate(360deg);
+  }
 }
 
 .modal__btn:focus, .modal__btn:hover {
