@@ -33,4 +33,15 @@ const postBooking = (userID, date, roomNum) => {
   });
 }
 
-export { fetchData, postBooking };
+const getSingleUser = (id) => {
+  return fetch(`http://localhost:3001/api/v1/customers/${id}`)
+    .then(response => {
+      if (response.ok) {
+        return response.json();
+      } else {
+        throw new Error(response.status);
+      }
+  });
+}
+
+export { fetchData, postBooking, getSingleUser };

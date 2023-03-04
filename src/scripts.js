@@ -2,7 +2,7 @@
 import './css/styles.css';
 import './css/micromodal.css';
 import './images/lobby.jpg';
-import { fetchData, postBooking } from './apiCalls';
+import { fetchData, postBooking, getSingleUser } from './apiCalls';
 import MicroModal from 'micromodal';
 import User from './classes/User.js';
 import Room from './classes/Room.js';
@@ -89,8 +89,7 @@ const showLogin = () => {
 const verifyLogin = () => {
   if(password.value === 'overlook2021' && username.value.substr(0, 8) === 'customer'){
     hide(modalFooter2);
-    currentUser = new User(allUsers.find(user => parseInt(username.value.substr(8, 10)) === user.id));
-    // does this need to be in a class?  an allUsers
+    getSingleUser(username.value.substr(8, 10)).then(data => currentUser = new User(data));
     loginButton.innerHTML = '<span class="material-symbols-outlined checkmark">check</span>'
     setTimeout(MicroModal.close, 1200);
   } else if(password.value !== 'overlook2021' && username.value.substr(0, 8) === 'customer'){
