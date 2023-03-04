@@ -25,6 +25,7 @@ const modalFooter = document.getElementById('modalFooter');
 const modalFooter2 = document.getElementById('modalFooter2');
 const loginButton = document.getElementById('loginButton');
 const password = document.getElementById('password');
+const seeAllButton = document.getElementById('seeAllBookings');
 
 // Global Variables
 let currentUser, allBookings, allRooms, currentRooms, allUsers;
@@ -60,7 +61,11 @@ chooseType.addEventListener('click', () => {
 
 loginButton.addEventListener('click', () => {
   verifyLogin();
-})
+});
+
+seeAllButton.addEventListener('click', () => {
+  displayBookings();
+});
 
 // Functions
 const show = (element) => {
@@ -168,6 +173,7 @@ const displayExpenses = () => {
 
 const offerChoices = () => {
   hide(chooseType);
+  hide(seeAllButton);
   clear(modalFooter);
   show(modalFooter);
 
@@ -192,6 +198,7 @@ const offerChoices = () => {
 
 const showAll = () => {
   show(chooseType);
+  show(seeAllButton);
   hide(modalFooter);
   currentRooms = allRooms.filterByBookedStatus(allBookings.findTaken(chosenDate.value));
   populateAvailable();
