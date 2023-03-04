@@ -155,6 +155,7 @@ const displayBookings = () => {
   hide(findRoomSection);
   hide(expensesSection);
   show(bookingsSection);
+  currentRooms = allRooms.filterByBookedStatus(allBookings.findTaken(chosenDate.value));
   populateBookings();
 }
 
@@ -203,8 +204,9 @@ const offerChoices = () => {
 
   allRooms.getAllRoomTypes().forEach(roomType => {
     document.getElementById(`${roomType}`).addEventListener('click', () => {
+
       currentRooms = allRooms.filterByRoomType(`${roomType}`);
-        populateAvailable();
+      populateAvailable();
     });
   });
 }
@@ -220,8 +222,12 @@ const showAll = () => {
 const bookRoom = (num) => {
   postBooking(currentUser.id, chosenDate.value.replaceAll('-', '/'), parseInt(num));
   
-  fetchData().then(data => allBookings = new Bookings(data[2].bookings));
-
+  fetchData().then(data => {
+    allBookings = new Bookings(data[2].bookings)
+    currentRooms = allRooms.filterByBookedStatus(allBookings.findTaken(chosenDate.value));
+    setTimeout(populateAvailable, 2000);
+  });
+  
   const roomButton = document.getElementById(`${num}`)
   roomButton.innerText = 'Booked!';
   roomButton.disabled = 'true';
@@ -231,6 +237,7 @@ const bookRoom = (num) => {
 
 const displayManagerDashboard = () => {
   // could make the hide/show functions accept an array of items and iterate through those to perform each action, so that I can pass in all this shit at once
+
   hide(nav);
   hide(findRoomSection);
   show(managerDashboard);
