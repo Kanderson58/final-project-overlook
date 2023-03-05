@@ -172,17 +172,19 @@ const displayBookings = () => {
 }
 
 const populateBookings = () => {
+  clear(bookingsContent);
+
   bookingsContent.innerHTML = '<h3>Your Bookings:</h3>';
 
   currentUser.filterBookingByUser(allBookings.bookings);
+  currentUser.sortByDate(formatDate(new Date()).replaceAll('-', ''));
 
-  currentUser.bookedRooms.forEach(booking => {
-    if(parseInt(formatDate(new Date()).replaceAll('-', '')) > parseInt(booking.date.replaceAll('/', ''))){
-      bookingsContent.innerHTML += `<p class="single-booking" tabindex="0">Your previous booking was in <span class="emphasize">Room ${booking.roomNumber}</span> on <span class="emphasize">${booking.date}.</span></p>`;
-    } else {
-      // find a way to sort so the upcoming bookings are the soonest ones
-      bookingsContent.innerHTML += `<p class="single-booking" tabindex="0">Your upcoming booking is in <span class="emphasize">Room ${booking.roomNumber}</span> on <span class="emphasize">${booking.date}!</span> Enjoy your stay!</p>`;
-    }
+  currentUser.newBookings.forEach(booking => {
+    bookingsContent.innerHTML += `<p class="single-booking" tabindex="0">Your upcoming booking is in <span class="emphasize">Room ${booking.roomNumber}</span> on <span class="emphasize">${booking.date}!</span> Enjoy your stay!</p>`;
+  });
+
+  currentUser.oldBookings.forEach(booking => {
+    bookingsContent.innerHTML += `<p class="single-booking" tabindex="0">Your previous booking was in <span class="emphasize">Room ${booking.roomNumber}</span> on <span class="emphasize">${booking.date}.</span></p>`;
   });
 }
 
@@ -243,8 +245,6 @@ const bookRoom = (num) => {
 }
 
 const displayManagerDashboard = () => {
-  // could make the hide/show functions accept an array of items and iterate through those to perform each action, so that I can pass in all this shit at once
-
   hide([nav, findRoomSection]);
   show([managerDashboard]);
 
