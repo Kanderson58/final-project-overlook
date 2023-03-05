@@ -26,8 +26,9 @@ class User {
         this.oldBookings.push(booking);
       }
     })
+
     this.newBookings.sort((a, b) => a.date.replaceAll('/', '') - b.date.replaceAll('/', ''));
-    this.oldBookings.sort((a, b) => a.date.replaceAll('/', '') - b.date.replaceAll('/', ''));
+    this.oldBookings.sort((a, b) => b.date.replaceAll('/', '') - a.date.replaceAll('/', ''));
   }
 
   getTotalCost(allRooms) {

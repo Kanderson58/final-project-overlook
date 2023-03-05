@@ -6,12 +6,20 @@ import Room from '../src/classes/Room.js';
 const expect = chai.expect;
 
 describe('Manager', () => {
-  let bookingsInst, roomsInst, manager;
+  let bookingsInst, roomsInst, manager, date;
 
   beforeEach(() => {
+    const formatDate = (date) => {
+      const year = date.toLocaleString("default", { year: "numeric" });
+      const month = date.toLocaleString("default", { month: "2-digit" });
+      const day = date.toLocaleString("default", { day: "2-digit" });
+      return year + "-" + month + "-" + day;
+    }
+
     bookingsInst = new Bookings(bookings);
     roomsInst = new Room(rooms);
     manager = new Manager(bookingsInst, roomsInst, customers);
+    date = formatDate(new Date())
   })
 
   it('should be an instance of Manager', () => {
@@ -31,12 +39,12 @@ describe('Manager', () => {
   });
 
   it('should get the rooms available on today\'s date', () => {
-    manager.getRoomsAvailableToday();
+    manager.getRoomsAvailableToday(date);
 
     expect(manager.todaysAvailableRooms.length).to.equal(5);
   });
 
   it('should be able to calculate all the revenue for today', () => {
-    expect(manager.calculateRevenue()).to.equal(0);
-  })
+    expect(manager.calculateRevenue(date)).to.equal('0');
+  });
 });

@@ -12,7 +12,7 @@ Actions that need to happen:
 [X] Be able to log in as manager
 [X] Manager can see total rooms available today
 [X] Manager can see all revenue for today
-[ ] Manager can see a percentage of occupied rooms for the day
+[X] Manager can see a percentage of occupied rooms for the day
 [ ] Manager can search through users by name
 [ ] Manager can see each user's stats - name,bookings, and total amount spent
 [ ] Manager can add bookings

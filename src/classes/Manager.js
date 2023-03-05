@@ -17,7 +17,7 @@ class Manager {
       .reduce((acc, room) => {
       acc += room.costPerNight;
       return acc;
-    }, 0);
+    }, 0).toLocaleString();
   }
 }
 
