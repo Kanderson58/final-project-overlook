@@ -66,10 +66,15 @@
 
 .submit {
   border: 1px black solid;
-  padding: 3%;
+  padding: 3% 15%;
   border-radius: 5px;
   margin-top: 3%;
   background-color: #e3e3e385;
+}
+
+.submit:disabled {
+  color: black;
+  font-size: 12pt;
 }
 
 .checkmark {
