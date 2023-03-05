@@ -234,10 +234,10 @@ const showAll = () => {
 const bookRoom = (num) => {
   postBooking(currentUser.id, chosenDate.value.replaceAll('-', '/'), parseInt(num));
   
-  // fetchData().then(data => {
-  //   allBookings = new Bookings(data[2].bookings)
-  //   currentRooms = allRooms.filterByBookedStatus(allBookings.findTaken(chosenDate.value));
-  // });
+  fetchData().then(data => {
+    allBookings = new Bookings(data[2].bookings)
+    currentRooms = allRooms.filterByBookedStatus(allBookings.findTaken(chosenDate.value));
+  });
   
   const roomButton = document.getElementById(`${num}`)
   roomButton.innerText = 'Booked!';
