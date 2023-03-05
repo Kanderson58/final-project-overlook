@@ -34,6 +34,7 @@ const revenue = document.getElementById('revenue');
 const managerDashboard = document.getElementById('managerDashboard');
 const managerAvailable = document.getElementById('managerAvailable')
 const numAvailable = document.getElementById('numAvailable');
+const percentAvailable = document.getElementById('percentAvailable');
 
 // Global variables
 let currentUser, allBookings, allRooms, currentRooms, manager;
@@ -253,7 +254,10 @@ const displayManagerDashboard = () => {
   hide(findRoomSection);
   show(managerDashboard);
 
-  numAvailable.innerText = manager.getRoomsAvailableToday(formatDate(new Date())).length
+  numAvailable.innerText = manager.getRoomsAvailableToday(formatDate(new Date())).length;
+
+  percentAvailable.innerText = (manager.getRoomsAvailableToday(formatDate(new Date())).length)/25 * 100;
+
   manager.getRoomsAvailableToday(formatDate(new Date())).forEach(room => {
     managerAvailable.innerHTML += `<li>Room ${room.number} (${room.roomType} with ${room.numBeds} ${room.bedSize} bed(s))</li>`
   })
