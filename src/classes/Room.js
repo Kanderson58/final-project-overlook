@@ -2,7 +2,10 @@ class Room {
   constructor(rooms) {
     this.allRooms = rooms;
     this.availableRooms;
-    this.userRooms;
+  }
+  
+  getAllRoomTypes() {
+    return [...new Set(this.rooms.map(room => room.roomType))];
   }
 
   filterByBookedStatus(booked) {
@@ -10,24 +13,24 @@ class Room {
     return this.availableRooms;
   }
 
-  filterByRoomType()  {
-
+  filterByRoomType(roomType)  {
+    return this.availableRooms.filter(room => room.roomType === roomType);
   }
 
   filterByBidet() {
-
+    return this.availableRooms.filter(room => room.bidet);
   }
 
-  filterByBedSize() {
-
+  filterByBedSize(size) {
+    return this.availableRooms.filter(room => room.bedSize === size);
   }
 
-  filterByNumBeds() {
-
+  filterByNumBeds(num) {
+    return this.availableRooms.filter(room => room.numBeds === num);
   }
 
-  filterByCost() {
-
+  filterByCost(max) {
+    return this.availableRooms.filter(room => room.costPerNight < max);
   }
 }
 

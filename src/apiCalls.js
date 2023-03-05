@@ -18,4 +18,30 @@ const fetchData = () => {
   .catch((error) => console.log(error));
 }
 
-export { fetchData };
+const postBooking = (userID, date, roomNum) => {
+  fetch('http://localhost:3001/api/v1/bookings', {
+    method: 'POST',
+    headers: {
+      'Accept': 'application/json',
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify({ 
+      "userID": userID, 
+      "date": date, 
+      "roomNumber": roomNum
+    })
+  });
+}
+
+const getSingleUser = (id) => {
+  return fetch(`http://localhost:3001/api/v1/customers/${id}`)
+    .then(response => {
+      if (response.ok) {
+        return response.json();
+      } else {
+        throw new Error(response.status);
+      }
+  });
+}
+
+export { fetchData, postBooking, getSingleUser };

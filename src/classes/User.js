@@ -4,6 +4,8 @@ class User {
     this.id = userInfo.id;
     this.bookedRooms = [];
     this.totalSpent;
+    this.oldBookings = [];
+    this.newBookings = [];
   }
 
   filterBookingByUser(allBookings) {
@@ -13,16 +15,19 @@ class User {
     return this.bookedRooms;
   }
 
-  filterOldBookings() {
-    return this.bookedRooms.filter(booking => {
-      return (new Date().toISOString().split('T')[0].replaceAll('-', '') > booking.date.replaceAll('/', ''));
-    });
-  }
+  sortByDate(date) {
+    this.oldBookings = [];
+    this.newBookings = [];
 
-  filterNewBookings() {
-    return this.bookedRooms.filter(booking => {
-      return (new Date().toISOString().split('T')[0].replaceAll('-', '') < booking.date.replaceAll('/', ''));
-    });
+    this.bookedRooms.forEach(booking => {
+      if(booking.date.replaceAll('/', '') >= date) {
+        this.newBookings.push(booking);
+      } else {
+        this.oldBookings.push(booking);
+      }
+    })
+    this.newBookings.sort((a, b) => a.date.replaceAll('/', '') - b.date.replaceAll('/', ''));
+    this.oldBookings.sort((a, b) => a.date.replaceAll('/', '') - b.date.replaceAll('/', ''));
   }
 
   getTotalCost(allRooms) {

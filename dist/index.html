@@ -13,7 +13,7 @@
     <h1>Overlook Booking</h1>
     <p class="motto">Simply the best! ™️</p>
   </header>
-  <nav class="row">
+  <nav id="nav" class="row">
     <div class="nav-buttons row">
       <button class="nav-button" id="home"><span class="material-symbols-outlined">Home</span>Home</button><button class="nav-button" id="myBookings"><span class="material-symbols-outlined">bookmark</span>My Bookings</button><button class="nav-button" id="myExpenses"><span class="material-symbols-outlined">face</span>My Expenses</button>
     </div>
@@ -24,6 +24,10 @@
     </div>
   </nav>
   <main class="row">
+    <section id="managerDashboard" class="manager-dash row hidden" aria-hidden="true">
+      <ul class="today-available" id="managerAvailable">Today's Available Rooms - there are <span class="space-out" id="numAvailable"></span> out of 25 rooms available today.<span class="space-out" id="percentAvailable"></span>% are still available.</ul>
+      <p class="revenue" id="revenue"></p>
+    </section>
     <section class ="date-selector column" id="findRoom" aria-hidden="false">
       <h2>Find Me A Room:</h2>
       <form class="row">
@@ -32,11 +36,9 @@
       </form>
     </section>
     <section class="bookings hidden row" aria-hidden="true" id="bookings">
-      <div class="new" id="new"></div>
-      <div class="old" id="old"></div>
+      <div class="bookings-section" id="bookingsContent"></div>
     </section>
     <section class="expenses hidden column" aria-hidden="true" id="expenses">
-      <!-- Expenses Populate Here -->
     </section>
   </main>
   <footer>
@@ -44,29 +46,52 @@
     <p>Overlook Booking and the Overlook Booking logo are trademarks or registered trademarks of nothing, no one in the United States and/or other countries.</p>
     <p>All other trademarks are the property of their respective owners.</p>
   </footer>
-  <!-- Modal -->
+  <!-- Modal 1 -->
   <div class="modal micromodal-slide" id="modal-1" aria-hidden="true">
-    <div class="modal__overlay" tabindex="-1" data-micromodal-close>
+    <div class="modal__overlay center" tabindex="-1" data-micromodal-close>
       <div class="modal__container" role="dialog" aria-modal="true" aria-labelledby="modal-1-title">
         <header class="modal__header">
-          <h2 class="modal__title" id="modal-1-title">
-            Micromodal
+          <h2 class="modal__title center" id="modal-1-title">
+            Rooms That You'll Love, Available On:
+            <span id="dateTitle" class="date-title"></span>
           </h2>
           <button class="modal__close" aria-label="Close modal" data-micromodal-close></button>
         </header>
-        <main class="modal__content" id="modal-1-content">
-          <p>
-            
-          </p>
+        <main class="modal__content center" id="modal-1-content">
+          <ul id="availableRooms" class="available-rooms column"></ul>
         </main>
-        <footer class="modal__footer">
-          <button class="modal__btn modal__btn-primary">Continue</button>
-          <button class="modal__btn" data-micromodal-close aria-label="Close this dialog window">Close</button>
-        </footer>
+        <div class="modal__footer center">
+          <button id="chooseType" class="modal__btn choose-room" tabindex="1">Choose Room Type</button>
+          <button id="seeAllBookings" class="modal__btn choose-room" data-micromodal-close>See My Bookings</button>
+        </div>
+        <div id="modalFooter" class="center hidden" aria-hidden="true"></div>
       </div>
     </div>
   </div>
-  <!-- End Modal -->
+  <!-- End Modal 1 -->
+  <!-- Start Modal 2 -->
+  <div class="modal micromodal-slide" id="modal-2" aria-hidden="true">
+    <div class="modal__overlay center" tabindex="-1">
+      <div class="modal__container-2" role="dialog" aria-modal="true" aria-labelledby="modal-2-title">
+        <header class="modal__header">
+          <h2 class="modal__title center" id="modal-2-title">Login</h2>
+        </header>
+        <form class="modal__content column center login" id="modal-2-content">
+          <div class="username column">
+            <label for="username">Username:</label class="username-label"><input type="text" id="username" class="password-input">
+          </div>
+          <div class="password column">
+            <label for="password" class="password-label">Password:</label><input type="text" id="password" class="password-input">
+          </div>
+        </form>
+        <div class="modal__footer center">
+            <button id="loginButton" class="submit">Submit</button>
+        </div>
+        <div id="modalFooter2" class="center hidden" aria-hidden="true"></div>
+      </div>
+    </div>
+  </div>
+  <!-- End Modal 2-->
 </body>
 <script src="bundle.js"></script>
 </html>

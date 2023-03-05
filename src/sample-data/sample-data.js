@@ -111,7 +111,7 @@ const rooms = [
   },
   {
     "number": 4,
-    "roomType": "single room",
+    "roomType": "junior suite",
     "bidet": false,
     "bedSize": "queen",
     "numBeds": 1,
