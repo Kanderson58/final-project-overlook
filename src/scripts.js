@@ -49,9 +49,8 @@ window.addEventListener('load', fetchData().then(data => {
 }));
 
 homeButton.addEventListener('click', () => { 
-  show(findRoomSection);
-  hide(bookingsSection);
-  hide(expensesSection);
+  show([findRoomSection]);
+  hide([bookingsSection, expensesSection]);
 });
 
 myBookingsButton.addEventListener('click', () => { displayBookings() });
@@ -77,14 +76,14 @@ seeAllButton.addEventListener('click', () => {
 });
 
 // Functions
-const show = (element) => {
-  element.classList.remove('hidden');
-  element.setAttribute('aria-hidden', 'false');
+const show = (elements) => {
+  elements.forEach(element => element.classList.remove('hidden'));
+  elements.forEach(element => element.setAttribute('aria-hidden', 'false'));
 }
 
-const hide = (element) => {
-  element.classList.add('hidden');
-  element.setAttribute('aria-hidden', 'true');
+const hide = (elements) => {
+  elements.forEach(element => element.classList.add('hidden'));
+  elements.forEach(element => element.setAttribute('aria-hidden', 'true'));
 }
 
 const clear = (element) => {
@@ -105,7 +104,7 @@ const formatDate = (date) => {
 
 const verifyLogin = () => {
   if(password.value === 'overlook2021' && username.value.substr(0, 8) === 'customer' && username.value.length < 11){
-    hide(modalFooter2);
+    hide([modalFooter2]);
     getSingleUser(username.value.substr(8, 10)).then(data => currentUser = new User(data));
     loginButton.disabled = 'true';
     loginButton.innerHTML = '<span class="material-symbols-outlined checkmark">check</span>'
@@ -126,14 +125,14 @@ const verifyLogin = () => {
 
 const giveFeedback = (reason) => {
   modalFooter2.innerHTML = '';
-  show(modalFooter2);
+  show([modalFooter2]);
   modalFooter2.innerHTML += `<p class="wrong">Incorrect ${reason}!</p>`;
 }
 
 const showModal = () => {
   MicroModal.show('modal-1');
-  show(chooseType);
-  hide(modalFooter);
+  show([chooseType]);
+  hide([modalFooter]);
   clear(availableRooms);
   dateTitle.innerText = chosenDate.value;
   populateAvailable();
@@ -166,32 +165,32 @@ const populateAvailable = () => {
 }
 
 const displayBookings = () => {
-  hide(findRoomSection);
-  hide(expensesSection);
-  show(bookingsSection);
+  hide([findRoomSection, expensesSection]);
+  show([bookingsSection]);
   currentRooms = allRooms.filterByBookedStatus(allBookings.findTaken(chosenDate.value));
   populateBookings();
 }
 
 const populateBookings = () => {
+  clear(bookingsContent);
+
   bookingsContent.innerHTML = '<h3>Your Bookings:</h3>';
 
   currentUser.filterBookingByUser(allBookings.bookings);
+  currentUser.sortByDate(formatDate(new Date()).replaceAll('-', ''));
 
-  currentUser.bookedRooms.forEach(booking => {
-    if(parseInt(formatDate(new Date()).replaceAll('-', '')) > parseInt(booking.date.replaceAll('/', ''))){
-      bookingsContent.innerHTML += `<p class="single-booking" tabindex="0">Your previous booking was in <span class="emphasize">Room ${booking.roomNumber}</span> on <span class="emphasize">${booking.date}.</span></p>`;
-    } else {
-      // find a way to sort so the upcoming bookings are the soonest ones
-      bookingsContent.innerHTML += `<p class="single-booking" tabindex="0">Your upcoming booking is in <span class="emphasize">Room ${booking.roomNumber}</span> on <span class="emphasize">${booking.date}!</span> Enjoy your stay!</p>`;
-    }
+  currentUser.newBookings.forEach(booking => {
+    bookingsContent.innerHTML += `<p class="single-booking" tabindex="0">Your upcoming booking is in <span class="emphasize">Room ${booking.roomNumber}</span> on <span class="emphasize">${booking.date}!</span> Enjoy your stay!</p>`;
+  });
+
+  currentUser.oldBookings.forEach(booking => {
+    bookingsContent.innerHTML += `<p class="single-booking" tabindex="0">Your previous booking was in <span class="emphasize">Room ${booking.roomNumber}</span> on <span class="emphasize">${booking.date}.</span></p>`;
   });
 }
 
 const displayExpenses = () => {
-  hide(findRoomSection);
-  hide(bookingsSection);
-  show(expensesSection);
+  hide([findRoomSection, bookingsSection]);
+  show([expensesSection]);
 
   currentUser.filterBookingByUser(allBookings.bookings);
 
@@ -200,10 +199,9 @@ const displayExpenses = () => {
 }
 
 const offerChoices = () => {
-  hide(chooseType);
-  hide(seeAllButton);
+  hide([chooseType, seeAllButton]);
+  show([modalFooter]);
   clear(modalFooter);
-  show(modalFooter);
 
   allRooms.getAllRoomTypes().forEach((roomType) => {
   modalFooter.innerHTML += 
@@ -225,9 +223,8 @@ const offerChoices = () => {
 }
 
 const showAll = () => {
-  show(chooseType);
-  show(seeAllButton);
-  hide(modalFooter);
+  show([chooseType, seeAllButton]);
+  hide([modalFooter]);
   currentRooms = allRooms.filterByBookedStatus(allBookings.findTaken(chosenDate.value));
   populateAvailable();
 }
@@ -248,11 +245,8 @@ const bookRoom = (num) => {
 }
 
 const displayManagerDashboard = () => {
-  // could make the hide/show functions accept an array of items and iterate through those to perform each action, so that I can pass in all this shit at once
-
-  hide(nav);
-  hide(findRoomSection);
-  show(managerDashboard);
+  hide([nav, findRoomSection]);
+  show([managerDashboard]);
 
   numAvailable.innerText = manager.getRoomsAvailableToday(formatDate(new Date())).length;
 
