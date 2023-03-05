@@ -40,7 +40,7 @@ let currentUser, allBookings, allRooms, currentRooms, manager;
 
 // Event listeners
 window.addEventListener('load', fetchData().then(data => {
-  chosenDate.setAttribute('value', new Date().toISOString().split('T')[0]);
+  chosenDate.setAttribute('value', formatDate(new Date()));
   allRooms = new Room(data[1].rooms);
   allBookings = new Bookings(data[2].bookings);
   showLogin();
@@ -92,6 +92,14 @@ const clear = (element) => {
 
 const showLogin = () => {
   MicroModal.show('modal-2')
+}
+
+
+const formatDate = (date) => {
+  const year = date.toLocaleString("default", { year: "numeric" });
+  const month = date.toLocaleString("default", { month: "2-digit" });
+  const day = date.toLocaleString("default", { day: "2-digit" });
+  return year + "-" + month + "-" + day;
 }
 
 const verifyLogin = () => {
@@ -165,7 +173,7 @@ const populateBookings = () => {
   currentUser.filterBookingByUser(allBookings.bookings);
 
   currentUser.bookedRooms.forEach(booking => {
-    if(parseInt(new Date().toISOString().split('T')[0].replaceAll('-', '')) > parseInt(booking.date.replaceAll('/', ''))){
+    if(parseInt(formatDate(new Date()).replaceAll('-', '')) > parseInt(booking.date.replaceAll('/', ''))){
       bookingsContent.innerHTML += `<p class="single-booking" tabindex="0">Your previous booking was in <span class="emphasize">Room ${booking.roomNumber}</span> on <span class="emphasize">${booking.date}.</span></p>`;
     } else {
       // find a way to sort so the upcoming bookings are the soonest ones
@@ -204,7 +212,6 @@ const offerChoices = () => {
 
   allRooms.getAllRoomTypes().forEach(roomType => {
     document.getElementById(`${roomType}`).addEventListener('click', () => {
-
       currentRooms = allRooms.filterByRoomType(`${roomType}`);
       populateAvailable();
     });
@@ -225,7 +232,6 @@ const bookRoom = (num) => {
   fetchData().then(data => {
     allBookings = new Bookings(data[2].bookings)
     currentRooms = allRooms.filterByBookedStatus(allBookings.findTaken(chosenDate.value));
-    setTimeout(populateAvailable, 2000);
   });
   
   const roomButton = document.getElementById(`${num}`)
@@ -242,10 +248,10 @@ const displayManagerDashboard = () => {
   hide(findRoomSection);
   show(managerDashboard);
 
-  numAvailable.innerText = manager.getRoomsAvailableToday().length
-  manager.getRoomsAvailableToday().forEach(room => {
+  numAvailable.innerText = manager.getRoomsAvailableToday(formatDate(new Date())).length
+  manager.getRoomsAvailableToday(formatDate(new Date())).forEach(room => {
     managerAvailable.innerHTML += `<li>Room ${room.number} (${room.roomType} with ${room.numBeds} ${room.bedSize} bed(s))</li>`
   })
 
-  revenue.innerText = `Today's revenue so far is $${manager.calculateRevenue()}.`
+  revenue.innerText = `Today's revenue so far is $${manager.calculateRevenue(formatDate(new Date()))}.`
 }

@@ -6,14 +6,14 @@ class Manager {
     this.todaysAvailableRooms;
   }
 
-  getRoomsAvailableToday() {
-    this.todaysAvailableRooms = this.roomsInst.filterByBookedStatus(this.bookingsInst.findTaken(new Date().toISOString().split('T')[0].replaceAll('-', '/')));
+  getRoomsAvailableToday(date) {
+    this.todaysAvailableRooms = this.roomsInst.filterByBookedStatus(this.bookingsInst.findTaken(date.replaceAll('-', '/')));
     return this.todaysAvailableRooms
   }
 
-  calculateRevenue() {
+  calculateRevenue(date) {
     return this.roomsInst.rooms
-      .filter(room => this.bookingsInst.findTaken(new Date().toISOString().split('T')[0].replaceAll('-', '/')).map(booking => booking.roomNumber).includes(room.number))
+      .filter(room => this.bookingsInst.findTaken(date.replaceAll('-', '/')).map(booking => booking.roomNumber).includes(room.number))
       .reduce((acc, room) => {
       acc += room.costPerNight;
       return acc;
