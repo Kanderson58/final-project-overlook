@@ -142,7 +142,7 @@
   color: rgba(0,0,0,.8);
 }
 
-.modal__btn {
+.modal__btn:not(.choose-room) {
   font-size: .875rem;
   padding: 1%;
   margin: 1% 5%;
@@ -160,6 +160,14 @@
   transition: transform .25s ease-out,-webkit-transform .25s ease-out;
 }
 
+.choose-room {
+  border: 1px solid #4e1621;
+  border-radius: 5px;
+  font-size: 20pt;
+  margin: 0 2%;
+  padding: 1%;
+}
+
 .book-now {
   margin-bottom: 2%;
 }
@@ -167,7 +175,7 @@
 .book-now:disabled {
   color: white;
   background-image: linear-gradient(to bottom right, #fadbe0, #c79da4, #4e1621, #c79da4, #fadbe0);
-  font-family: Helvetica, sans-serif;
+  font-family:cursive;
   font-size: larger;
   border: none;
   animation-name: spin;

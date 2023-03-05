@@ -2,11 +2,12 @@
 import './css/styles.css';
 import './css/micromodal.css';
 import './images/lobby.jpg';
-import { fetchData, postBooking } from './apiCalls';
+import { fetchData, postBooking, getSingleUser } from './apiCalls';
 import MicroModal from 'micromodal';
 import User from './classes/User.js';
 import Room from './classes/Room.js';
 import Bookings from './classes/Bookings.js';
+import Manager from './classes/Manager';
 
 // Query selectors
 const findRoomSection = document.getElementById('findRoom');
@@ -25,17 +26,25 @@ const modalFooter = document.getElementById('modalFooter');
 const modalFooter2 = document.getElementById('modalFooter2');
 const loginButton = document.getElementById('loginButton');
 const password = document.getElementById('password');
+const seeAllButton = document.getElementById('seeAllBookings');
+const nav = document.getElementById('nav');
+const revenue = document.getElementById('revenue');
 
-// Global Variables
-let currentUser, allBookings, allRooms, currentRooms, allUsers;
+// Manager dashboard query selectors
+const managerDashboard = document.getElementById('managerDashboard');
+const managerAvailable = document.getElementById('managerAvailable')
+const numAvailable = document.getElementById('numAvailable');
+
+// Global variables
+let currentUser, allBookings, allRooms, currentRooms, manager;
 
 // Event listeners
 window.addEventListener('load', fetchData().then(data => {
-  chosenDate.setAttribute('value', new Date().toISOString().split('T')[0]);
+  chosenDate.setAttribute('value', formatDate(new Date()));
   allRooms = new Room(data[1].rooms);
   allBookings = new Bookings(data[2].bookings);
-  allUsers = data[0].customers;
   showLogin();
+  manager = new Manager(allBookings, allRooms, data[0].customers);
 }));
 
 homeButton.addEventListener('click', () => { 
@@ -60,7 +69,11 @@ chooseType.addEventListener('click', () => {
 
 loginButton.addEventListener('click', () => {
   verifyLogin();
-})
+});
+
+seeAllButton.addEventListener('click', () => {
+  displayBookings();
+});
 
 // Functions
 const show = (element) => {
@@ -81,16 +94,29 @@ const showLogin = () => {
   MicroModal.show('modal-2')
 }
 
+
+const formatDate = (date) => {
+  const year = date.toLocaleString("default", { year: "numeric" });
+  const month = date.toLocaleString("default", { month: "2-digit" });
+  const day = date.toLocaleString("default", { day: "2-digit" });
+  return year + "-" + month + "-" + day;
+}
+
 const verifyLogin = () => {
-  if(password.value === 'overlook2021' && username.value.substr(0, 8) === 'customer'){
+  if(password.value === 'overlook2021' && username.value.substr(0, 8) === 'customer' && username.value.length < 11){
     hide(modalFooter2);
-    currentUser = new User(allUsers.find(user => parseInt(username.value.substr(8, 10)) === user.id));
-    // does this need to be in a class?  an allUsers
+    getSingleUser(username.value.substr(8, 10)).then(data => currentUser = new User(data));
+    loginButton.disabled = 'true';
     loginButton.innerHTML = '<span class="material-symbols-outlined checkmark">check</span>'
     setTimeout(MicroModal.close, 1200);
-  } else if(password.value !== 'overlook2021' && username.value.substr(0, 8) === 'customer'){
+  } else if(username.value === 'manager' && password.value === 'overlook2021'){
+    loginButton.disabled = 'true';
+    loginButton.innerHTML = '<span class="material-symbols-outlined checkmark">check</span><p>Hello Manager!</p>'
+    setTimeout(MicroModal.close, 1200);
+    displayManagerDashboard();
+  } else if(password.value !== 'overlook2021' && username.value.substr(0, 8) === 'customer' && username.value.length < 11 || username.value === 'manager'){
     giveFeedback('password');
-  } else if(password.value === 'overlook2021' && username.value.substr(0, 8) !== 'customer'){
+  } else if(password.value === 'overlook2021' && username.value.substr(0, 8) !== 'customer' ||  username.value.length >= 11){
     giveFeedback('username');
   } else {
     giveFeedback('username and password')
@@ -114,6 +140,11 @@ const showModal = () => {
 
 const populateAvailable = () => {
   clear(availableRooms);
+
+  fetchData().then(data => {
+    allBookings = new Bookings(data[2].bookings)
+    currentRooms = allRooms.filterByBookedStatus(allBookings.findTaken(chosenDate.value));
+  });
   
   if(currentRooms.length === 0) {
     availableRooms.innerHTML +=
@@ -137,6 +168,7 @@ const displayBookings = () => {
   hide(findRoomSection);
   hide(expensesSection);
   show(bookingsSection);
+  currentRooms = allRooms.filterByBookedStatus(allBookings.findTaken(chosenDate.value));
   populateBookings();
 }
 
@@ -146,7 +178,7 @@ const populateBookings = () => {
   currentUser.filterBookingByUser(allBookings.bookings);
 
   currentUser.bookedRooms.forEach(booking => {
-    if(parseInt(new Date().toISOString().split('T')[0].replaceAll('-', '')) > parseInt(booking.date.replaceAll('/', ''))){
+    if(parseInt(formatDate(new Date()).replaceAll('-', '')) > parseInt(booking.date.replaceAll('/', ''))){
       bookingsContent.innerHTML += `<p class="single-booking" tabindex="0">Your previous booking was in <span class="emphasize">Room ${booking.roomNumber}</span> on <span class="emphasize">${booking.date}.</span></p>`;
     } else {
       // find a way to sort so the upcoming bookings are the soonest ones
@@ -168,10 +200,11 @@ const displayExpenses = () => {
 
 const offerChoices = () => {
   hide(chooseType);
+  hide(seeAllButton);
   clear(modalFooter);
   show(modalFooter);
 
-  allRooms.getAllRoomTypes().forEach((roomType, index) => {
+  allRooms.getAllRoomTypes().forEach((roomType) => {
   modalFooter.innerHTML += 
     `<input type="radio" id="${roomType}" class="room-type" value="${roomType}" name="roomType" tabindex="0"><label for="${roomType}">${roomType}</label>`;
   });
@@ -185,13 +218,14 @@ const offerChoices = () => {
   allRooms.getAllRoomTypes().forEach(roomType => {
     document.getElementById(`${roomType}`).addEventListener('click', () => {
       currentRooms = allRooms.filterByRoomType(`${roomType}`);
-        populateAvailable();
+      populateAvailable();
     });
   });
 }
 
 const showAll = () => {
   show(chooseType);
+  show(seeAllButton);
   hide(modalFooter);
   currentRooms = allRooms.filterByBookedStatus(allBookings.findTaken(chosenDate.value));
   populateAvailable();
@@ -200,11 +234,29 @@ const showAll = () => {
 const bookRoom = (num) => {
   postBooking(currentUser.id, chosenDate.value.replaceAll('-', '/'), parseInt(num));
   
-  fetchData().then(data => allBookings = new Bookings(data[2].bookings));
-
+  fetchData().then(data => {
+    allBookings = new Bookings(data[2].bookings)
+    currentRooms = allRooms.filterByBookedStatus(allBookings.findTaken(chosenDate.value));
+  });
+  
   const roomButton = document.getElementById(`${num}`)
   roomButton.innerText = 'Booked!';
   roomButton.disabled = 'true';
 
   populateBookings();
+}
+
+const displayManagerDashboard = () => {
+  // could make the hide/show functions accept an array of items and iterate through those to perform each action, so that I can pass in all this shit at once
+
+  hide(nav);
+  hide(findRoomSection);
+  show(managerDashboard);
+
+  numAvailable.innerText = manager.getRoomsAvailableToday(formatDate(new Date())).length
+  manager.getRoomsAvailableToday(formatDate(new Date())).forEach(room => {
+    managerAvailable.innerHTML += `<li>Room ${room.number} (${room.roomType} with ${room.numBeds} ${room.bedSize} bed(s))</li>`
+  })
+
+  revenue.innerText = `Today's revenue so far is $${manager.calculateRevenue(formatDate(new Date()))}.`
 }
