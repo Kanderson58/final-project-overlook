@@ -37,6 +37,32 @@ describe('User', () => {
     }]);
   });
 
+  it('should sort the new bookings', () => {
+    user.sortByDate('20230301');
+
+    expect(user.newBookings).to.deep.equal([
+      {
+        "id": "5fwrgu4i7k55hl6sz",
+        "userID": 1,
+        "date": "2023/04/22",
+        "roomNumber": 1
+      }
+    ]);
+  });
+
+  it('should sort the old bookings', () => {
+    user.sortByDate('20230301');
+
+    expect(user.oldBookings).to.deep.equal([
+      {
+        "id": "5fwrgu4i7k55hl6t9",
+        "userID": 1,
+        "date": "2023/01/14",
+        "roomNumber": 1
+      }
+    ]);
+  });
+
   it('should calculate total cost spent', () => {
     expect(user.getTotalCost(rooms)).to.equal('716.8');
   });
