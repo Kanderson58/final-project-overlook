@@ -3,9 +3,9 @@ class User {
     this.name = userInfo.name;
     this.id = userInfo.id;
     this.bookedRooms = [];
-    this.totalSpent;
     this.oldBookings = [];
     this.newBookings = [];
+    this.totalSpent;
   }
 
   filterBookingByUser(allBookings) {

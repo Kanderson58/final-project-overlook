@@ -35,6 +35,8 @@ const managerDashboard = document.getElementById('managerDashboard');
 const managerAvailable = document.getElementById('managerAvailable')
 const numAvailable = document.getElementById('numAvailable');
 const percentAvailable = document.getElementById('percentAvailable');
+const searchUsers = document.getElementById('searchUsersByName');
+const findUserButton = document.getElementById('findUser');
 
 // Global variables
 let currentUser, allBookings, allRooms, currentRooms, manager;
@@ -74,6 +76,11 @@ loginButton.addEventListener('click', () => {
 seeAllButton.addEventListener('click', () => {
   displayBookings();
 });
+
+findUser.addEventListener('click', (event) => {
+  event.preventDefault();
+  displayUserSearch();
+})
 
 // Functions
 const show = (elements) => {
@@ -257,4 +264,9 @@ const displayManagerDashboard = () => {
   })
 
   revenue.innerText = `Today's revenue so far is $${manager.calculateRevenue(formatDate(new Date()))}.`
+}
+
+const displayUserSearch = () => {
+  console.log(searchUsers.value)
+  console.log(manager.findUser(searchUsers.value));
 }
