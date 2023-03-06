@@ -170,11 +170,11 @@ footer:not(.modal__footer) {
   background-color: rgba(255, 255, 255, 0.875);
 }
 
-.revenue, .today-available {
+.today-available {
   background-color: rgba(255, 255, 255, 0.875);
   width: 400px;
   display: flex;
-  flex-wrap: wrap;
+  flex-direction: column;
   margin: 3%;
   padding: 3%;
   border-radius: 10px;
@@ -183,6 +183,10 @@ footer:not(.modal__footer) {
 .today-available {
   height: 250px;
   overflow-y: scroll;
+}
+
+.revenue {
+  text-align: center;
 }
 
 ::-webkit-scrollbar {
@@ -198,11 +202,6 @@ footer:not(.modal__footer) {
 ::-webkit-scrollbar-thumb {
   background: grey;
   border-radius: 10px;
-}
-
-.revenue {
-  margin: 5%;
-  text-align: center;
 }
 
 .space-out {

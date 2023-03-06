@@ -37,6 +37,7 @@ const numAvailable = document.getElementById('numAvailable');
 const percentAvailable = document.getElementById('percentAvailable');
 const searchUsers = document.getElementById('searchUsersByName');
 const findUserButton = document.getElementById('findUser');
+const userInfo = document.getElementById('userInfo');
 
 // Global variables
 let currentUser, allBookings, allRooms, currentRooms, manager;
@@ -77,7 +78,7 @@ seeAllButton.addEventListener('click', () => {
   displayBookings();
 });
 
-findUser.addEventListener('click', (event) => {
+findUserButton.addEventListener('click', (event) => {
   event.preventDefault();
   displayUserSearch();
 })
@@ -267,6 +268,14 @@ const displayManagerDashboard = () => {
 }
 
 const displayUserSearch = () => {
-  console.log(searchUsers.value)
-  console.log(manager.findUser(searchUsers.value));
+  currentUser = new User(manager.findUser(searchUsers.value));
+
+  clear(userInfo);
+  userInfo.innerHTML += `<h3>${currentUser.name}</h3>`
+  
+  currentUser.filterBookingByUser(allBookings.bookings).forEach(booking => {
+    userInfo.innerHTML += `<p class="single-booking">Booking on: ${booking.date} in Room ${booking.roomNumber}</p>`
+  })
+
+  show([userInfo]);    
 }
