@@ -237,6 +237,11 @@ footer:not(.modal__footer) {
   background-color: #860c0e2b;
 }
 
+.delete-booking:disabled {
+  color:white;
+  background-color: rgba(134, 12, 14, 0.686)a4;
+}
+
 .hidden {
   display: none;
 }

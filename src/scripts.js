@@ -292,6 +292,8 @@ const displayUserSearch = () => {
 
   selectors.forEach(selector => {
     selector.addEventListener('click', (event) => {
+      selector.innerText = 'Deleted!';
+      selector.disabled = 'true';
       deleteBooking(event.target.id);
     })
   });
@@ -300,10 +302,10 @@ const displayUserSearch = () => {
 const deleteBooking = (id) => {
   removeBooking(id);
 
-  fetchData().then(data => {
-    clear(userInfo);
-    show([userInfo]);
-
-    userInfo.innerHTML += `<p class="center"><span class="size-up">${currentUser.name}</span> - $${currentUser.getTotalCost(allRooms.rooms)} spent</p>`;
-  });
+  setTimeout(() => {
+    fetchData().then(data => {
+      allBookings = new Bookings(data[2].bookings);
+      displayUserSearch();
+    })
+  }, 2000);
 }
