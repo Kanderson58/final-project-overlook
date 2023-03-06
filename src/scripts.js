@@ -41,6 +41,7 @@ const userInfo = document.getElementById('userInfo');
 
 // Global variables
 let currentUser, allBookings, allRooms, currentRooms, manager;
+let selectors = [];
 
 // Event listeners
 window.addEventListener('load', fetchData().then(data => {
@@ -80,7 +81,7 @@ seeAllButton.addEventListener('click', () => {
 
 findUserButton.addEventListener('click', (event) => {
   event.preventDefault();
-  displayUserSearch();
+  displayUserSearch(event);
 })
 
 // Functions
@@ -270,14 +271,32 @@ const displayManagerDashboard = () => {
 const displayUserSearch = () => {
   currentUser = new User(manager.findUser(searchUsers.value));
   currentUser.filterBookingByUser(allBookings.bookings);
+  currentUser.sortByDate(formatDate(new Date()).replaceAll('-', ''));
 
   clear(userInfo);
+  show([userInfo]);    
 
   userInfo.innerHTML += `<p class="center"><span class="size-up">${currentUser.name}</span> - $${currentUser.getTotalCost(allRooms.rooms)} spent</p>`;
+
+  currentUser.newBookings.forEach(booking => {
+    userInfo.innerHTML += `<p class="single-booking row">Booking on: ${booking.date} in Room ${booking.roomNumber}<button class="delete-booking" id="${booking.id}">Delete Booking</button></p>`
+  });
   
-  currentUser.bookedRooms.forEach(booking => {
+  currentUser.oldBookings.forEach(booking => {
     userInfo.innerHTML += `<p class="single-booking">Booking on: ${booking.date} in Room ${booking.roomNumber}</p>`
   });
 
-  show([userInfo]);    
+  currentUser.newBookings.forEach(booking => {
+    selectors.push(document.getElementById(`${booking.id}`));
+  });
+
+  selectors.forEach(selector => {
+    selector.addEventListener('click', (event) => {
+      deleteBooking(event.target.id);
+    })
+  });
+}
+
+const deleteBooking = (id) => {
+  console.log(id)
 }

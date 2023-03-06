@@ -17,4 +17,4 @@ Actions that need to happen:
 [X] Manager can see each user's stats - name,bookings, and total amount spent
 [ ] Manager can add bookings
 [ ] Manager can delete bookings
-[ ] Manager cannot delete old bookings
+[X] Manager cannot delete old bookings

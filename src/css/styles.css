@@ -223,6 +223,20 @@ footer:not(.modal__footer) {
   margin: 3% 30%;
 }
 
+.single-booking {
+  justify-content: space-between;
+  align-items: center;
+  font-size: 10pt;
+}
+
+.delete-booking {
+  font-size: 10pt;
+  border: #860c0f 1px solid;
+  border-radius: 5px;
+  padding: 2%;
+  background-color: #860c0e2b;
+}
+
 .hidden {
   display: none;
 }
