@@ -300,7 +300,7 @@ const displayUserSearch = () => {
 }
 
 const deleteBooking = (id) => {
-  removeBooking(id);
+  removeBooking(id)
 
   setTimeout(() => {
     fetchData().then(data => {
