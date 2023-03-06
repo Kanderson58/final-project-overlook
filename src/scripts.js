@@ -259,7 +259,7 @@ const displayManagerDashboard = () => {
 
   numAvailable.innerText = manager.getRoomsAvailableToday(formatDate(new Date())).length;
 
-  percentAvailable.innerText = (manager.getRoomsAvailableToday(formatDate(new Date())).length)/25 * 100;
+  percentAvailable.innerText = Math.round((manager.getRoomsAvailableToday(formatDate(new Date())).length)/25 * 100);
 
   manager.getRoomsAvailableToday(formatDate(new Date())).forEach(room => {
     managerAvailable.innerHTML += `<li>Room ${room.number} (${room.roomType} with ${room.numBeds} ${room.bedSize} bed(s))</li>`
