@@ -279,8 +279,8 @@ const displayManagerDashboard = () => {
 
 const displayUserSearch = () => {
   if(!manager.findUser(searchUsers.value)) {
-    userInfo.innerHTML = '<p>That customer is not in our system.</p>'
-    return
+    userInfo.innerHTML = '<p>That customer is not in our system.</p>';
+    return;
   } else {
     currentUser = new User(manager.findUser(searchUsers.value));
   }
@@ -348,6 +348,8 @@ const managerAdd = () => {
         setTimeout(() => {
           fetchData().then(data => {
             allBookings = new Bookings(data[2].bookings);
+            event.target.remove();
+            clear(bookingsForm);
             displayUserSearch();
           })
         }, 2000);
