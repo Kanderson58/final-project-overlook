@@ -44,4 +44,21 @@ const getSingleUser = (id) => {
   });
 }
 
-export { fetchData, postBooking, getSingleUser };
+const removeBooking = (bookingId) => {
+  fetch(`http://localhost:3001/api/v1/bookings/${bookingId}`, {
+    method: 'DELETE',
+    headers: {
+      'Accept': 'application/json',
+      'Content-Type': 'application/json'
+    }
+  })
+  .then(response => {
+    if (response.ok) {
+      return response.json();
+    } else {
+      throw new Error(response.status);
+    }
+});
+}
+
+export { fetchData, postBooking, getSingleUser, removeBooking };

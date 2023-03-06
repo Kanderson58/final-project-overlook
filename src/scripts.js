@@ -2,7 +2,7 @@
 import './css/styles.css';
 import './css/micromodal.css';
 import './images/lobby.jpg';
-import { fetchData, postBooking, getSingleUser } from './apiCalls';
+import { fetchData, postBooking, getSingleUser, removeBooking } from './apiCalls';
 import MicroModal from 'micromodal';
 import User from './classes/User.js';
 import Room from './classes/Room.js';
@@ -274,7 +274,7 @@ const displayUserSearch = () => {
   currentUser.sortByDate(formatDate(new Date()).replaceAll('-', ''));
 
   clear(userInfo);
-  show([userInfo]);    
+  show([userInfo]);
 
   userInfo.innerHTML += `<p class="center"><span class="size-up">${currentUser.name}</span> - $${currentUser.getTotalCost(allRooms.rooms)} spent</p>`;
 
@@ -298,5 +298,12 @@ const displayUserSearch = () => {
 }
 
 const deleteBooking = (id) => {
-  console.log(id)
+  removeBooking(id);
+
+  fetchData().then(data => {
+    clear(userInfo);
+    show([userInfo]);
+
+    userInfo.innerHTML += `<p class="center"><span class="size-up">${currentUser.name}</span> - $${currentUser.getTotalCost(allRooms.rooms)} spent</p>`;
+  });
 }
