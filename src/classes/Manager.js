@@ -17,8 +17,14 @@ class Manager {
       .reduce((acc, room) => {
       acc += room.costPerNight;
       return acc;
-    }, 0).toLocaleString();
+    }, 0).toFixed(2).toLocaleString();
   }
+
+  findUser(name) {
+    return this.users.find(user => user.name.toLowerCase() === name.toLowerCase());
+  }
+
+
 }
 
 export default Manager;

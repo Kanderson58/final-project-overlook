@@ -63,6 +63,10 @@ h3 {
   font-weight: 600;
 }
 
+h4 {
+  font-size: 12pt;
+}
+
 footer:not(.modal__footer) {
   margin: 3%;
   border-top: rgb(212, 212, 212) solid 1px;
@@ -170,11 +174,11 @@ footer:not(.modal__footer) {
   background-color: rgba(255, 255, 255, 0.875);
 }
 
-.revenue, .today-available {
+.today-available {
   background-color: rgba(255, 255, 255, 0.875);
   width: 400px;
   display: flex;
-  flex-wrap: wrap;
+  flex-direction: column;
   margin: 3%;
   padding: 3%;
   border-radius: 10px;
@@ -183,6 +187,10 @@ footer:not(.modal__footer) {
 .today-available {
   height: 250px;
   overflow-y: scroll;
+}
+
+.revenue {
+  text-align: center;
 }
 
 ::-webkit-scrollbar {
@@ -200,13 +208,19 @@ footer:not(.modal__footer) {
   border-radius: 10px;
 }
 
-.revenue {
-  margin: 5%;
-  text-align: center;
-}
-
 .space-out {
   margin-left: 1%;
+}
+
+.size-up {
+  font-size: 20pt;
+}
+
+.find-user {
+  border: 1px solid #860c0f;
+  border-radius: 5px;
+  padding: 2%;
+  margin: 3% 30%;
 }
 
 .hidden {

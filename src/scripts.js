@@ -35,6 +35,9 @@ const managerDashboard = document.getElementById('managerDashboard');
 const managerAvailable = document.getElementById('managerAvailable')
 const numAvailable = document.getElementById('numAvailable');
 const percentAvailable = document.getElementById('percentAvailable');
+const searchUsers = document.getElementById('searchUsersByName');
+const findUserButton = document.getElementById('findUser');
+const userInfo = document.getElementById('userInfo');
 
 // Global variables
 let currentUser, allBookings, allRooms, currentRooms, manager;
@@ -74,6 +77,11 @@ loginButton.addEventListener('click', () => {
 seeAllButton.addEventListener('click', () => {
   displayBookings();
 });
+
+findUserButton.addEventListener('click', (event) => {
+  event.preventDefault();
+  displayUserSearch();
+})
 
 // Functions
 const show = (elements) => {
@@ -257,4 +265,19 @@ const displayManagerDashboard = () => {
   })
 
   revenue.innerText = `Today's revenue so far is $${manager.calculateRevenue(formatDate(new Date()))}.`
+}
+
+const displayUserSearch = () => {
+  currentUser = new User(manager.findUser(searchUsers.value));
+  currentUser.filterBookingByUser(allBookings.bookings);
+
+  clear(userInfo);
+
+  userInfo.innerHTML += `<p class="center"><span class="size-up">${currentUser.name}</span> - $${currentUser.getTotalCost(allRooms.rooms)} spent</p>`;
+  
+  currentUser.bookedRooms.forEach(booking => {
+    userInfo.innerHTML += `<p class="single-booking">Booking on: ${booking.date} in Room ${booking.roomNumber}</p>`
+  });
+
+  show([userInfo]);    
 }
