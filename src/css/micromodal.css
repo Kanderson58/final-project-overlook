@@ -184,7 +184,7 @@
   font-size: larger;
   border: none;
   animation-name: spin;
-  animation-duration: 2000ms;
+  animation-duration: 1000ms;
   animation-iteration-count: 1;
   animation-timing-function: linear; 
 }

@@ -45,6 +45,6 @@ describe('Manager', () => {
   });
 
   it('should be able to calculate all the revenue for today', () => {
-    expect(manager.calculateRevenue(date)).to.equal('0');
+    expect(manager.calculateRevenue(date)).to.equal('0.00');
   });
 });
