@@ -269,13 +269,15 @@ const displayManagerDashboard = () => {
 
 const displayUserSearch = () => {
   currentUser = new User(manager.findUser(searchUsers.value));
+  currentUser.filterBookingByUser(allBookings.bookings);
 
   clear(userInfo);
-  userInfo.innerHTML += `<h3>${currentUser.name}</h3>`
+
+  userInfo.innerHTML += `<p class="center"><span class="size-up">${currentUser.name}</span> - $${currentUser.getTotalCost(allRooms.rooms)} spent</p>`;
   
-  currentUser.filterBookingByUser(allBookings.bookings).forEach(booking => {
+  currentUser.bookedRooms.forEach(booking => {
     userInfo.innerHTML += `<p class="single-booking">Booking on: ${booking.date} in Room ${booking.roomNumber}</p>`
-  })
+  });
 
   show([userInfo]);    
 }

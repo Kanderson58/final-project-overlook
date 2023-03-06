@@ -63,6 +63,10 @@ h3 {
   font-weight: 600;
 }
 
+h4 {
+  font-size: 12pt;
+}
+
 footer:not(.modal__footer) {
   margin: 3%;
   border-top: rgb(212, 212, 212) solid 1px;
@@ -206,6 +210,17 @@ footer:not(.modal__footer) {
 
 .space-out {
   margin-left: 1%;
+}
+
+.size-up {
+  font-size: 20pt;
+}
+
+.find-user {
+  border: 1px solid #860c0f;
+  border-radius: 5px;
+  padding: 2%;
+  margin: 3% 30%;
 }
 
 .hidden {
