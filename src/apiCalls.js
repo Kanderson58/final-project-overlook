@@ -15,7 +15,7 @@ const fetchData = () => {
     getPromises('rooms'),
     getPromises('bookings')
 ])
-  .catch((error) => console.log(error));
+  .catch((error) => alert(error));
 }
 
 const postBooking = (userID, date, roomNum) => {
@@ -41,7 +41,8 @@ const getSingleUser = (id) => {
       } else {
         throw new Error(response.status);
       }
-  });
+  })
+  .catch(error => alert(error));
 }
 
 const removeBooking = (bookingId) => {
@@ -58,7 +59,8 @@ const removeBooking = (bookingId) => {
     } else {
       throw new Error(response.status);
     }
-});
+  })
+  .catch(error => alert(error));
 }
 
 export { fetchData, postBooking, getSingleUser, removeBooking };

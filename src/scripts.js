@@ -112,7 +112,7 @@ const formatDate = (date) => {
 }
 
 const verifyLogin = () => {
-  if(password.value === 'overlook2021' && username.value.substr(0, 8) === 'customer' && username.value.length < 11){
+  if(password.value === 'overlook2021' && username.value.substr(0, 8) === 'customer' && username.value.length < 11 && parseInt(username.value.substr(8, 10)) < 51){
     hide([modalFooter2]);
     getSingleUser(username.value.substr(8, 10)).then(data => currentUser = new User(data));
     loginButton.disabled = 'true';
@@ -123,11 +123,11 @@ const verifyLogin = () => {
     loginButton.innerHTML = '<span class="material-symbols-outlined checkmark">check</span><p>Hello Manager!</p>'
     setTimeout(MicroModal.close, 1200);
     displayManagerDashboard();
-  } else if(password.value !== 'overlook2021' && username.value.substr(0, 8) === 'customer' && username.value.length < 11 || username.value === 'manager'){
+  } else if(password.value !== 'overlook2021' && username.value.substr(0, 8) === 'customer' && username.value.length < 11 && parseInt(username.value.substr(8, 10)) < 51 || username.value === 'manager'){
     giveFeedback('password');
-  } else if(password.value === 'overlook2021' && username.value.substr(0, 8) !== 'customer' ||  username.value.length >= 11){
+  } else if(password.value === 'overlook2021' && (username.value.substr(0, 8) !== 'customer' ||  username.value.length >= 11 || parseInt(username.value.substr(8, 10)) > 51)){
     giveFeedback('username');
-  } else {
+  } else if(password.value !== 'overlook2021' && username.value.substr(0, 8) !== 'customer' ||  username.value.length >= 11 || parseInt(username.value.substr(8, 10)) > 51){
     giveFeedback('username and password')
   }
 }
