@@ -33,8 +33,11 @@
       <section class="column today-available">
         <label for="searchUsersByName">Look Up Customer By Name</label>
         <input type="text" id="searchUsersByName">
-        <button id="findUser" class="find-user">Find User</button>
-        <div id="userInfo" aria-hidden="true"></div>
+        <div class="row">
+          <button id="findUser" class="find-user">Find User</button><button id="addBooking" class="find-user hidden">Add Booking</button>
+        </div>
+        <div id="userInfo" aria-hidden="false"></div>
+        <div id="bookingsForm" class="hidden" aria-hidden="true"><input type="date" id="chooseDateManager" class="calendar-manager"><label for="chooseDateManager" class="get-room-manager"><button id="getRoomManager">Get Room<span class="material-symbols-outlined">arrow_forward</span></button></label></div>
       </section>
     </section>
     <section class ="date-selector column" id="findRoom" aria-hidden="false">
@@ -90,7 +93,7 @@
             <label for="username">Username:</label class="username-label"><input type="text" id="username" class="password-input">
           </div>
           <div class="password column">
-            <label for="password" class="password-label">Password:</label><input type="text" id="password" class="password-input">
+            <label for="password" class="password-label">Password:</label><input type="password" id="password" class="password-input">
           </div>
         </form>
         <div class="modal__footer center">

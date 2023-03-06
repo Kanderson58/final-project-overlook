@@ -30,7 +30,15 @@ const postBooking = (userID, date, roomNum) => {
       "date": date, 
       "roomNumber": roomNum
     })
-  });
+  })
+  .then(response => {
+    if (response.ok) {
+      return response.json();
+    } else {
+      throw new Error(response.status);
+    }
+  })
+  .catch(error => alert(error));
 }
 
 const getSingleUser = (id) => {

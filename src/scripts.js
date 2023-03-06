@@ -38,6 +38,10 @@ const percentAvailable = document.getElementById('percentAvailable');
 const searchUsers = document.getElementById('searchUsersByName');
 const findUserButton = document.getElementById('findUser');
 const userInfo = document.getElementById('userInfo');
+const addBookingButton = document.getElementById('addBooking');
+const bookingsForm = document.getElementById('bookingsForm');
+const chosenDateManager = document.getElementById('chooseDateManager');
+const getRoomManager = document.getElementById('getRoomManager');
 
 // Global variables
 let currentUser, allBookings, allRooms, currentRooms, manager;
@@ -82,7 +86,11 @@ seeAllButton.addEventListener('click', () => {
 findUserButton.addEventListener('click', (event) => {
   event.preventDefault();
   displayUserSearch(event);
-})
+});
+
+addBookingButton.addEventListener('click', () => {
+  managerAdd();
+});
 
 // Functions
 const show = (elements) => {
@@ -119,6 +127,7 @@ const verifyLogin = () => {
     loginButton.innerHTML = '<span class="material-symbols-outlined checkmark">check</span>'
     setTimeout(MicroModal.close, 1200);
   } else if(username.value === 'manager' && password.value === 'overlook2021'){
+    hide([modalFooter2]);
     loginButton.disabled = 'true';
     loginButton.innerHTML = '<span class="material-symbols-outlined checkmark">check</span><p>Hello Manager!</p>'
     setTimeout(MicroModal.close, 1200);
@@ -269,12 +278,18 @@ const displayManagerDashboard = () => {
 }
 
 const displayUserSearch = () => {
-  currentUser = new User(manager.findUser(searchUsers.value));
+  if(!manager.findUser(searchUsers.value)) {
+    userInfo.innerHTML = '<p>That customer is not in our system.</p>'
+    return
+  } else {
+    currentUser = new User(manager.findUser(searchUsers.value));
+  }
+
   currentUser.filterBookingByUser(allBookings.bookings);
   currentUser.sortByDate(formatDate(new Date()).replaceAll('-', ''));
 
   clear(userInfo);
-  show([userInfo]);
+  show([userInfo, addBookingButton]);
 
   userInfo.innerHTML += `<p class="center"><span class="size-up">${currentUser.name}</span> - $${currentUser.getTotalCost(allRooms.rooms)} spent</p>`;
 
@@ -308,4 +323,35 @@ const deleteBooking = (id) => {
       displayUserSearch();
     })
   }, 2000);
+}
+
+const managerAdd = () => {
+  hide([userInfo]);
+  show([bookingsForm]);
+
+  chosenDateManager.setAttribute('value', formatDate(new Date()));
+
+  getRoomManager.addEventListener('click', () => {
+
+    allRooms.filterByBookedStatus(allBookings.findTaken(chosenDateManager.value));
+
+    allRooms.availableRooms.forEach(room => {
+      bookingsForm.innerHTML += `<button id="manager-${room.number}" class="manager-available">Room ${room.number}, ${room.roomType} with ${room.numBeds} ${room.bedSize} bed(s).  $${room.costPerNight}. Click to book!</button>`
+    })
+
+    allRooms.availableRooms.forEach(room => {
+      document.getElementById(`manager-${room.number}`).addEventListener('click', (event) => {
+        postBooking(currentUser.id, chosenDateManager.value.replaceAll('-', '/'), parseInt(event.target.id.slice(8)));
+        event.target.innerText = 'Booked!';
+        event.target.disabled = 'true';
+
+        setTimeout(() => {
+          fetchData().then(data => {
+            allBookings = new Bookings(data[2].bookings);
+            displayUserSearch();
+          })
+        }, 2000);
+      })
+    })
+  })
 }
