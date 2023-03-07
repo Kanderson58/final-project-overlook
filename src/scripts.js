@@ -28,8 +28,6 @@ const loginButton = document.getElementById('loginButton');
 const password = document.getElementById('password');
 const seeAllButton = document.getElementById('seeAllBookings');
 const nav = document.getElementById('nav');
-const revenue = document.getElementById('revenue');
-const allAvailableManager = document.getElementById('allAvailableManager');
 
 // Manager dashboard query selectors
 const managerDashboard = document.getElementById('managerDashboard');
@@ -43,6 +41,8 @@ const addBookingButton = document.getElementById('addBooking');
 const bookingsForm = document.getElementById('bookingsForm');
 const chosenDateManager = document.getElementById('chooseDateManager');
 const getRoomManager = document.getElementById('getRoomManager');
+const revenue = document.getElementById('revenue');
+const allAvailableManager = document.getElementById('allAvailableManager');
 
 // Global variables
 let currentUser, allBookings, allRooms, currentRooms, manager;

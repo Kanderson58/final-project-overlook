@@ -73,7 +73,12 @@ const removeBooking = (bookingId) => {
 
 const handleError = (error) => {
   const findRoomSection = document.getElementById('findRoom');
-  findRoomSection.innerHTML = `<p class="error">Sorry, we can't load your page right now!  Please try reloading.  Error: ${error}</p>`
+  const availableRooms = document.getElementById('availableRooms');
+  const allAvailableManager = document.getElementById('allAvailableManager');
+  const userInfo = document.getElementById('userInfo');
+  [findRoomSection, availableRooms, allAvailableManager, userInfo].forEach(element => {
+    element.innerHTML = `<p class="error">Sorry, we can't load your page right now!  Please try reloading.  Error: ${error}</p>`
+  })
 }
 
 export { fetchData, postBooking, getSingleUser, removeBooking };
