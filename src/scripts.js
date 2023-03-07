@@ -29,6 +29,7 @@ const password = document.getElementById('password');
 const seeAllButton = document.getElementById('seeAllBookings');
 const nav = document.getElementById('nav');
 const revenue = document.getElementById('revenue');
+const allAvailableManager =document.getElementById('allAvailableManager');
 
 // Manager dashboard query selectors
 const managerDashboard = document.getElementById('managerDashboard');
@@ -51,6 +52,8 @@ let selectors = [];
 window.addEventListener('load', fetchData().then(data => {
   chosenDate.setAttribute('value', formatDate(new Date()));
   chosenDate.setAttribute('min', formatDate(new Date()));
+  chosenDateManager.setAttribute('value', formatDate(new Date()));
+  chosenDateManager.setAttribute('min', formatDate(new Date()));
 
   allRooms = new Room(data[1].rooms);
   allBookings = new Bookings(data[2].bookings);
@@ -86,16 +89,30 @@ seeAllButton.addEventListener('click', () => {
 });
 
 findUserButton.addEventListener('click', (event) => {
-  event.preventDefault();
-  displayUserSearch(event);
+  event.preventDefault();  fetchData().then(data => {
+    allBookings = new Bookings(data[2].bookings);
+    currentRooms = allRooms.filterByBookedStatus(allBookings.findTaken(chosenDate.value));
+    displayUserSearch();
+  })
 });
 
 addBookingButton.addEventListener('click', () => {
   fetchData().then(data => {
     allBookings = new Bookings(data[2].bookings);
-    managerAdd();
+    currentRooms = allRooms.filterByBookedStatus(allBookings.findTaken(chosenDate.value));
+    hide([userInfo]);
+    show([bookingsForm]);
+    showAvailableManager();
   })
 });
+
+getRoomManager.addEventListener('click', () => {
+  // fetchData().then(data => {
+  //   allBookings = new Bookings(data[2].bookings);
+  //   currentRooms = allRooms.filterByBookedStatus(allBookings.findTaken(chosenDate.value));
+    showAvailableManager();
+  // })
+})
 
 // Functions
 const show = (elements) => {
@@ -209,9 +226,6 @@ const populateBookings = () => {
     bookingsContent.innerHTML += `<p class="single-booking" tabindex="0">Your previous booking was in <span class="emphasize">Room ${booking.roomNumber}</span> on <span class="emphasize">${booking.date}.</span></p>`;
   });
 }
-
-// error handle on the DOM
-// don't let the user book rooms in the past
 
 const displayExpenses = () => {
   hide([findRoomSection, bookingsSection]);
@@ -333,31 +347,25 @@ const deleteBooking = (id) => {
   }, 2000);
 }
 
-const managerAdd = () => {
-  hide([userInfo]);
-  show([bookingsForm]);
+const showAvailableManager = () => {
+  clear(allAvailableManager);
+  show([allAvailableManager]);
 
-  chosenDateManager.setAttribute('value', formatDate(new Date()));
-  chosenDateManager.setAttribute('min', formatDate(new Date()));
+  allRooms.filterByBookedStatus(allBookings.findTaken(chosenDateManager.value));
 
-  getRoomManager.addEventListener('click', () => {
+  allRooms.availableRooms.forEach(room => {
+    allAvailableManager.innerHTML += `<button id="manager-${room.number}" class="manager-available">Room ${room.number}, ${room.roomType} with ${room.numBeds} ${room.bedSize} bed(s).  $${room.costPerNight}. Click to book!</button>`
+  })
 
-    allRooms.filterByBookedStatus(allBookings.findTaken(chosenDateManager.value));
+  allRooms.availableRooms.forEach(room => {
+    document.getElementById(`manager-${room.number}`).addEventListener('click', (event) => {
+      postBooking(currentUser.id, chosenDateManager.value.replaceAll('-', '/'), parseInt(event.target.id.slice(8)));
+      event.target.innerText = 'Booked!';
+      event.target.disabled = 'true';
 
-    allRooms.availableRooms.forEach(room => {
-      bookingsForm.innerHTML += `<button id="manager-${room.number}" class="manager-available">Room ${room.number}, ${room.roomType} with ${room.numBeds} ${room.bedSize} bed(s).  $${room.costPerNight}. Click to book!</button>`
-    })
-
-    allRooms.availableRooms.forEach(room => {
-      document.getElementById(`manager-${room.number}`).addEventListener('click', (event) => {
-        postBooking(currentUser.id, chosenDateManager.value.replaceAll('-', '/'), parseInt(event.target.id.slice(8)));
-        event.target.innerText = 'Booked!';
-        event.target.disabled = 'true';
-
-        setTimeout(() => {
-          event.target.remove();
-        }, 2000);
-      })
+      setTimeout(() => {
+        event.target.remove();
+      }, 2000);
     })
   })
 }
