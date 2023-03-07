@@ -15,7 +15,7 @@ const fetchData = () => {
     getPromises('rooms'),
     getPromises('bookings')
 ])
-  .catch((error) => console.log(error));
+  .catch((error) => handleError(error));
 }
 
 const postBooking = (userID, date, roomNum) => {
@@ -30,7 +30,15 @@ const postBooking = (userID, date, roomNum) => {
       "date": date, 
       "roomNumber": roomNum
     })
-  });
+  })
+  .then(response => {
+    if (response.ok) {
+      return response.json();
+    } else {
+      throw new Error(response.status);
+    }
+  })
+  .catch(error => handleError(error));
 }
 
 const getSingleUser = (id) => {
@@ -41,7 +49,8 @@ const getSingleUser = (id) => {
       } else {
         throw new Error(response.status);
       }
-  });
+  })
+  .catch(error => handleError(error));
 }
 
 const removeBooking = (bookingId) => {
@@ -58,7 +67,13 @@ const removeBooking = (bookingId) => {
     } else {
       throw new Error(response.status);
     }
-});
+  })
+  .catch(error => handleError(error));
+}
+
+const handleError = (error) => {
+  const findRoomSection = document.getElementById('findRoom');
+  findRoomSection.innerHTML = `<p class="error">Sorry, we can't load your page right now!  Please try reloading.  Error: ${error}</p>`
 }
 
 export { fetchData, postBooking, getSingleUser, removeBooking };

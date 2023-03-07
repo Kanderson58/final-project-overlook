@@ -220,7 +220,7 @@ footer:not(.modal__footer) {
   border: 1px solid #860c0f;
   border-radius: 5px;
   padding: 2%;
-  margin: 3% 30%;
+  margin: 3% 3% 0 0;
 }
 
 .single-booking {
@@ -239,7 +239,42 @@ footer:not(.modal__footer) {
 
 .delete-booking:disabled {
   color:white;
-  background-color: rgba(134, 12, 14, 0.686)a4;
+  background-color: rgb(134, 12, 14);
+}
+
+.calendar-manager, .get-room-manager {
+  border: rgb(188, 174, 174) solid 1px;
+  padding: 2%;
+  margin: 5% 0;
+  font-size: 10pt;
+  height: 30px;
+  width: 150px;
+}
+
+.get-room-manager {
+  background-color: rgba(255, 255, 255, 0.745);
+  float: right;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  white-space: nowrap;
+}
+
+.manager-available {
+  border: 1px solid black;
+  background-color: #860c0e3b;
+  margin-bottom: 2%;
+}
+
+.manager-available:disabled {
+  color: white;
+  background-color: #860c0e;
+}
+
+.error {
+  padding: 5%;
+  color: red;
+  background-color: rgba(255, 255, 255, 0.698);
 }
 
 .hidden {
