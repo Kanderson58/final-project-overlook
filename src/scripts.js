@@ -315,7 +315,7 @@ const displayUserSearch = () => {
 
   clear(userInfo);
   show([userInfo, addBookingButton]);
-  hide([bookingsForm]);
+  hide([bookingsForm, allAvailableManager]);
 
   userInfo.innerHTML += `<p class="center"><span class="size-up">${currentUser.name}</span> - $${currentUser.getTotalCost(allRooms.rooms)} spent</p>`;
 
