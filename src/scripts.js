@@ -29,7 +29,7 @@ const password = document.getElementById('password');
 const seeAllButton = document.getElementById('seeAllBookings');
 const nav = document.getElementById('nav');
 const revenue = document.getElementById('revenue');
-const allAvailableManager =document.getElementById('allAvailableManager');
+const allAvailableManager = document.getElementById('allAvailableManager');
 
 // Manager dashboard query selectors
 const managerDashboard = document.getElementById('managerDashboard');
@@ -138,17 +138,9 @@ const formatDate = (date) => {
 
 const verifyLogin = () => {
   if(password.value === 'overlook2021' && username.value.substr(0, 8) === 'customer' && username.value.length < 11 && parseInt(username.value.substr(8, 10)) < 51){
-    hide([modalFooter2]);
-    getSingleUser(username.value.substr(8, 10)).then(data => currentUser = new User(data));
-    loginButton.disabled = 'true';
-    loginButton.innerHTML = '<span class="material-symbols-outlined checkmark">check</span>'
-    setTimeout(MicroModal.close, 1200);
+    welcomeCustomer();
   } else if(username.value === 'manager' && password.value === 'overlook2021'){
-    hide([modalFooter2]);
-    loginButton.disabled = 'true';
-    loginButton.innerHTML = '<span class="material-symbols-outlined checkmark">check</span><p>Hello Manager!</p>'
-    setTimeout(MicroModal.close, 1200);
-    displayManagerDashboard();
+    welcomeManager();
   } else if(password.value !== 'overlook2021' && username.value.substr(0, 8) === 'customer' && username.value.length < 11 && parseInt(username.value.substr(8, 10)) < 51 || username.value === 'manager'){
     giveFeedback('password');
   } else if(password.value === 'overlook2021' && (username.value.substr(0, 8) !== 'customer' ||  username.value.length >= 11 || parseInt(username.value.substr(8, 10)) > 51)){
@@ -156,6 +148,22 @@ const verifyLogin = () => {
   } else if(password.value !== 'overlook2021' && username.value.substr(0, 8) !== 'customer' ||  username.value.length >= 11 || parseInt(username.value.substr(8, 10)) > 51){
     giveFeedback('username and password')
   }
+}
+
+const welcomeCustomer = () => {
+  hide([modalFooter2]);
+  getSingleUser(username.value.substr(8, 10)).then(data => currentUser = new User(data));
+  loginButton.disabled = 'true';
+  loginButton.innerHTML = '<span class="material-symbols-outlined checkmark">check</span>';
+  setTimeout(MicroModal.close, 1200);
+}
+
+const welcomeManager = () => {
+  hide([modalFooter2]);
+  loginButton.disabled = 'true';
+  loginButton.innerHTML = '<span class="material-symbols-outlined checkmark">check</span><p>Hello Manager!</p>'
+  setTimeout(MicroModal.close, 1200);
+  displayManagerDashboard();
 }
 
 const giveFeedback = (reason) => {
