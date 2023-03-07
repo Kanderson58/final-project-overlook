@@ -25,7 +25,7 @@
   </nav>
   <main class="row">
     <section id="managerDashboard" class="manager-dash row hidden" aria-hidden="true">
-      <div class="today-available column">
+      <div class="today-available column" tabindex="1">
         <p class="revenue" id="revenue"></p>
         <p class="revenue">Today's Available Rooms - there are <span class="space-out" id="numAvailable"></span> out of 25 rooms available today.<span class="space-out" id="percentAvailable"></span>% are still available.</p>
         <ul id="managerAvailable"></ul>
@@ -70,14 +70,14 @@
             Rooms That You'll Love, Available On:
             <span id="dateTitle" class="date-title"></span>
           </h2>
-          <button class="modal__close" aria-label="Close modal" data-micromodal-close></button>
+          <button class="modal__close" aria-label="Close modal" tabindex="0" data-micromodal-close></button>
         </header>
         <main class="modal__content center" id="modal-1-content">
           <ul id="availableRooms" class="available-rooms column"></ul>
         </main>
         <div class="modal__footer center">
           <button id="chooseType" class="modal__btn choose-room" tabindex="1">Choose Room Type</button>
-          <button id="seeAllBookings" class="modal__btn choose-room" data-micromodal-close>See My Bookings</button>
+          <button id="seeAllBookings" class="modal__btn choose-room" tabindex="2" data-micromodal-close>See My Bookings</button>
         </div>
         <div id="modalFooter" class="center hidden" aria-hidden="true"></div>
       </div>
