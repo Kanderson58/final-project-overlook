@@ -2,6 +2,8 @@
 
 ## Abstract
 
+Overlook booking is an app for users to be able to book hotel rooms, and managers to be able to assist customers with their bookings.  The goal is to provide a stylish, accessible, user-friendly page that customers enjoy using, which is thoroughly unit tested for bugs and offers a clean, attractive UI.
+
 ### Technologies Used:
 - JavaScript
 - HTML
@@ -24,6 +26,11 @@ To clone a copy of the project to a remote repository, follow these steps:
 ***
 
 ### Preview of App:
+
+![User Facing](https://user-images.githubusercontent.com/114871395/223494887-21873991-892a-4c76-af04-2e1fd27294c0.gif)
+
+
+![Manager Dashboard](https://user-images.githubusercontent.com/114871395/223495367-dbd7ad75-9d67-4fef-9012-4d70b6722181.gif)
 
 ***
 
