@@ -50,6 +50,8 @@ let selectors = [];
 // Event listeners
 window.addEventListener('load', fetchData().then(data => {
   chosenDate.setAttribute('value', formatDate(new Date()));
+  chosenDate.setAttribute('min', formatDate(new Date()));
+
   allRooms = new Room(data[1].rooms);
   allBookings = new Bookings(data[2].bookings);
   showLogin();
@@ -89,7 +91,10 @@ findUserButton.addEventListener('click', (event) => {
 });
 
 addBookingButton.addEventListener('click', () => {
-  managerAdd();
+  fetchData().then(data => {
+    allBookings = new Bookings(data[2].bookings);
+    managerAdd();
+  })
 });
 
 // Functions
@@ -111,11 +116,10 @@ const showLogin = () => {
   MicroModal.show('modal-2')
 }
 
-
 const formatDate = (date) => {
-  const year = date.toLocaleString("default", { year: "numeric" });
-  const month = date.toLocaleString("default", { month: "2-digit" });
-  const day = date.toLocaleString("default", { day: "2-digit" });
+  const year = date.toLocaleString('default', { year: 'numeric' });
+  const month = date.toLocaleString('default', { month: '2-digit' });
+  const day = date.toLocaleString('default', { day: '2-digit' });
   return year + "-" + month + "-" + day;
 }
 
@@ -149,7 +153,7 @@ const giveFeedback = (reason) => {
 
 const showModal = () => {
   MicroModal.show('modal-1');
-  show([chooseType]);
+  show([chooseType, seeAllButton]);
   hide([modalFooter]);
   clear(availableRooms);
   dateTitle.innerText = chosenDate.value;
@@ -205,6 +209,9 @@ const populateBookings = () => {
     bookingsContent.innerHTML += `<p class="single-booking" tabindex="0">Your previous booking was in <span class="emphasize">Room ${booking.roomNumber}</span> on <span class="emphasize">${booking.date}.</span></p>`;
   });
 }
+
+// error handle on the DOM
+// don't let the user book rooms in the past
 
 const displayExpenses = () => {
   hide([findRoomSection, bookingsSection]);
@@ -290,6 +297,7 @@ const displayUserSearch = () => {
 
   clear(userInfo);
   show([userInfo, addBookingButton]);
+  hide([bookingsForm]);
 
   userInfo.innerHTML += `<p class="center"><span class="size-up">${currentUser.name}</span> - $${currentUser.getTotalCost(allRooms.rooms)} spent</p>`;
 
@@ -330,6 +338,7 @@ const managerAdd = () => {
   show([bookingsForm]);
 
   chosenDateManager.setAttribute('value', formatDate(new Date()));
+  chosenDateManager.setAttribute('min', formatDate(new Date()));
 
   getRoomManager.addEventListener('click', () => {
 
@@ -346,12 +355,7 @@ const managerAdd = () => {
         event.target.disabled = 'true';
 
         setTimeout(() => {
-          fetchData().then(data => {
-            allBookings = new Bookings(data[2].bookings);
-            event.target.remove();
-            clear(bookingsForm);
-            displayUserSearch();
-          })
+          event.target.remove();
         }, 2000);
       })
     })
