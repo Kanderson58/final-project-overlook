@@ -14,7 +14,7 @@ const findRoomSection = document.getElementById('findRoom');
 const bookingsSection = document.getElementById('bookings');
 const bookingsContent = document.getElementById('bookingsContent');
 const expensesSection = document.getElementById('expenses');
-const homeButton = document.getElementById('home')
+const homeButton = document.getElementById('home');
 const myBookingsButton = document.getElementById('myBookings');
 const myExpensesButton = document.getElementById('myExpenses');
 const getRoom = document.getElementById('getRoom');
@@ -31,7 +31,7 @@ const nav = document.getElementById('nav');
 
 // Manager dashboard query selectors
 const managerDashboard = document.getElementById('managerDashboard');
-const managerAvailable = document.getElementById('managerAvailable')
+const managerAvailable = document.getElementById('managerAvailable');
 const numAvailable = document.getElementById('numAvailable');
 const percentAvailable = document.getElementById('percentAvailable');
 const searchUsers = document.getElementById('searchUsersByName');
@@ -57,8 +57,8 @@ window.addEventListener('load', fetchData().then(data => {
 
   allRooms = new Room(data[1].rooms);
   allBookings = new Bookings(data[2].bookings);
-  showLogin();
   manager = new Manager(allBookings, allRooms, data[0].customers);
+  showLogin();
 }));
 
 homeButton.addEventListener('click', () => { 
@@ -76,24 +76,19 @@ getRoom.addEventListener('click', (event) => {
   showModal();
 });
 
-chooseType.addEventListener('click', () => {
-  offerChoices();
-});
+chooseType.addEventListener('click', () => { offerChoices() });
 
-loginButton.addEventListener('click', () => {
-  verifyLogin();
-});
+loginButton.addEventListener('click', () => { verifyLogin() });
 
-seeAllButton.addEventListener('click', () => {
-  displayBookings();
-});
+seeAllButton.addEventListener('click', () => { displayBookings() });
 
 findUserButton.addEventListener('click', (event) => {
-  event.preventDefault();  fetchData().then(data => {
+  event.preventDefault();  
+  fetchData().then(data => {
     allBookings = new Bookings(data[2].bookings);
     currentRooms = allRooms.filterByBookedStatus(allBookings.findTaken(chosenDate.value));
     displayUserSearch();
-  })
+  });
 });
 
 addBookingButton.addEventListener('click', () => {
@@ -103,12 +98,10 @@ addBookingButton.addEventListener('click', () => {
     hide([userInfo]);
     show([bookingsForm]);
     showAvailableManager();
-  })
+  });
 });
 
-getRoomManager.addEventListener('click', () => {
-  showAvailableManager();
-})
+getRoomManager.addEventListener('click', () => { showAvailableManager() })
 
 // Functions
 const show = (elements) => {
@@ -126,7 +119,7 @@ const clear = (element) => {
 }
 
 const showLogin = () => {
-  MicroModal.show('modal-2')
+  MicroModal.show('modal-2');
 }
 
 const formatDate = (date) => {
@@ -146,7 +139,7 @@ const verifyLogin = () => {
   } else if(password.value === 'overlook2021' && (username.value.substr(0, 8) !== 'customer' ||  username.value.length >= 11 || parseInt(username.value.substr(8, 10)) > 51)){
     giveFeedback('username');
   } else if(password.value !== 'overlook2021' && username.value.substr(0, 8) !== 'customer' ||  username.value.length >= 11 || parseInt(username.value.substr(8, 10)) > 51){
-    giveFeedback('username and password')
+    giveFeedback('username and password');
   }
 }
 
@@ -161,7 +154,7 @@ const welcomeCustomer = () => {
 const welcomeManager = () => {
   hide([modalFooter2]);
   loginButton.disabled = 'true';
-  loginButton.innerHTML = '<span class="material-symbols-outlined checkmark">check</span><p>Hello Manager!</p>'
+  loginButton.innerHTML = '<span class="material-symbols-outlined checkmark">check</span><p>Hello Manager!</p>';
   setTimeout(MicroModal.close, 1200);
   displayManagerDashboard();
 }
@@ -185,13 +178,13 @@ const populateAvailable = () => {
   clear(availableRooms);
 
   fetchData().then(data => {
-    allBookings = new Bookings(data[2].bookings)
+    allBookings = new Bookings(data[2].bookings);
     currentRooms = allRooms.filterByBookedStatus(allBookings.findTaken(chosenDate.value));
   });
   
   if(currentRooms.length === 0) {
     availableRooms.innerHTML +=
-      `<li class="none-available">We're sorry!  There are no rooms of that type available on ${chosenDate.value}.  Please try selecting another type or date!</li>`
+      `<li class="none-available">We're sorry!  There are no rooms of that type available on ${chosenDate.value}.  Please try selecting another type or date!</li>`;
   }
 
   currentRooms.forEach(room => {
@@ -251,10 +244,10 @@ const offerChoices = () => {
     `<input type="radio" id="${roomType}" class="room-type" value="${roomType}" name="roomType" tabindex="0"><label for="${roomType}">${roomType}</label>`;
   });
 
-  modalFooter.innerHTML += '<button id="showAll" class="modal__btn">Show All</button>'
+  modalFooter.innerHTML += '<button id="showAll" class="modal__btn">Show All</button>';
 
   document.getElementById('showAll').addEventListener('click', () => {
-    showAll()
+    showAll();
   });
 
   allRooms.getAllRoomTypes().forEach(roomType => {
@@ -276,7 +269,7 @@ const bookRoom = (num) => {
   postBooking(currentUser.id, chosenDate.value.replaceAll('-', '/'), parseInt(num));
   
   fetchData().then(data => {
-    allBookings = new Bookings(data[2].bookings)
+    allBookings = new Bookings(data[2].bookings);
     currentRooms = allRooms.filterByBookedStatus(allBookings.findTaken(chosenDate.value));
   });
   
@@ -296,10 +289,10 @@ const displayManagerDashboard = () => {
   percentAvailable.innerText = Math.round((manager.getRoomsAvailableToday(formatDate(new Date())).length)/25 * 100);
 
   manager.getRoomsAvailableToday(formatDate(new Date())).forEach(room => {
-    managerAvailable.innerHTML += `<li>Room ${room.number} (${room.roomType} with ${room.numBeds} ${room.bedSize} bed(s))</li>`
+    managerAvailable.innerHTML += `<li>Room ${room.number} (${room.roomType} with ${room.numBeds} ${room.bedSize} bed(s))</li>`;
   })
 
-  revenue.innerText = `Today's revenue so far is $${manager.calculateRevenue(formatDate(new Date()))}.`
+  revenue.innerText = `Today's revenue so far is $${manager.calculateRevenue(formatDate(new Date()))}.`;
 }
 
 const displayUserSearch = () => {
@@ -320,11 +313,11 @@ const displayUserSearch = () => {
   userInfo.innerHTML += `<p class="center"><span class="size-up">${currentUser.name}</span> - $${currentUser.getTotalCost(allRooms.rooms)} spent</p>`;
 
   currentUser.newBookings.forEach(booking => {
-    userInfo.innerHTML += `<p class="single-booking row">Booking on: ${booking.date} in Room ${booking.roomNumber}<button class="delete-booking" id="${booking.id}">Delete Booking</button></p>`
+    userInfo.innerHTML += `<p class="single-booking row">Booking on: ${booking.date} in Room ${booking.roomNumber}<button class="delete-booking" id="${booking.id}">Delete Booking</button></p>`;
   });
   
   currentUser.oldBookings.forEach(booking => {
-    userInfo.innerHTML += `<p class="single-booking">Booking on: ${booking.date} in Room ${booking.roomNumber}</p>`
+    userInfo.innerHTML += `<p class="single-booking">Booking on: ${booking.date} in Room ${booking.roomNumber}</p>`;
   });
 
   currentUser.newBookings.forEach(booking => {
@@ -341,7 +334,7 @@ const displayUserSearch = () => {
 }
 
 const deleteBooking = (id) => {
-  removeBooking(id)
+  removeBooking(id);
 
   setTimeout(() => {
     fetchData().then(data => {
@@ -358,7 +351,7 @@ const showAvailableManager = () => {
   allRooms.filterByBookedStatus(allBookings.findTaken(chosenDateManager.value));
 
   allRooms.availableRooms.forEach(room => {
-    allAvailableManager.innerHTML += `<button id="manager-${room.number}" class="manager-available">Room ${room.number}, ${room.roomType} with ${room.numBeds} ${room.bedSize} bed(s).  $${room.costPerNight}. Click to book!</button>`
+    allAvailableManager.innerHTML += `<button id="manager-${room.number}" class="manager-available">Room ${room.number}, ${room.roomType} with ${room.numBeds} ${room.bedSize} bed(s).  $${room.costPerNight}. Click to book!</button>`;
   })
 
   allRooms.availableRooms.forEach(room => {
