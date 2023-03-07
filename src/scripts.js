@@ -107,11 +107,7 @@ addBookingButton.addEventListener('click', () => {
 });
 
 getRoomManager.addEventListener('click', () => {
-  // fetchData().then(data => {
-  //   allBookings = new Bookings(data[2].bookings);
-  //   currentRooms = allRooms.filterByBookedStatus(allBookings.findTaken(chosenDate.value));
-    showAvailableManager();
-  // })
+  showAvailableManager();
 })
 
 // Functions
